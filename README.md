@@ -9,4 +9,6 @@ Instructions:
 
 What Works: 
 
+What Doesn't Work:
+
 Project Highlights: 
