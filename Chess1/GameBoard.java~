@@ -168,7 +168,7 @@ public class GameBoard{
 		    }
 		}
 		board[px.getx()-2][px.gety()]=px;
-		board[px.getx()-2][px.gety()].setxy(px.getx()-2,px.gety());
+		board[px.getx()-2][px.gety()].setxy(px.getx()-3,px.gety());
 		board[px.getx()+1][px.gety()]=rk;
 		board[px.getx()+1][px.gety()].setxy(px.getx()+1,px.gety());
 		board[px.getx()][px.gety()].setFirst(false);
