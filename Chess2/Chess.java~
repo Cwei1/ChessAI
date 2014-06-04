@@ -1,4 +1,4 @@
- import java.io.*;
+import java.io.*;
 import java.util.*;
 public class Chess{
     public static String displayBoard (Piece[][] board){

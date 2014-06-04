@@ -1,4 +1,5 @@
 import java.util.*;
+import java.io.*;
 
 public class Run{
     public static void main(String[]args){
@@ -7,9 +8,27 @@ public class Run{
 	Gui main = new Gui(g);
 	main.setVisible(true);
 	int turn=0;
+	String response = "";
+	do{
+	    System.out.println("Would you like to play a game,or see one played? options are: <play> and <auto>");
+	    Scanner sc = new Scanner(System.in);
+	    response = sc.nextLine();
+	}
+	while(!(response.equals("play")) &&
+	      !(response.equals("auto")));
+	Scanner s = null;
+	if (response.equals("play")){
+	    s=new Scanner(System.in);
+	}
+	else{
+	    try{
+		s = new Scanner(new File("autoMoves.txt"));
+	    }
+	    catch (FileNotFoundException e){}
+	}
+	
 	System.out.println(g);
 	System.out.println("How to play: use the coordinate system to move the pieces just like normal chess.Except you only have 3 chances to get out of check and the there will be no hints. if after 3 'tries you're still in check' you lose!");
-	Scanner s=new Scanner(System.in);
 	while(!g.getdone()){
 	    String x=" ";
 	    if(turn%2==0){
@@ -18,7 +37,14 @@ public class Run{
 		x="Black";
 	    }
 	    System.out.println("It is "+x+"'s turn!\n");
-	    String l=s.nextLine();
+	    String l = "";
+	    try {
+		l=s.nextLine();
+	    }
+	    catch (NoSuchElementException e){
+		System.out.println("Game is over");
+		break;
+	    }
 	    if(l.equals("Castle")){
 		if(x.equals("White")){
 		    if(!g.castle(true)){
