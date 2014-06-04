@@ -256,162 +256,192 @@ public class Chess{
 	return first && second && third && fourth && fifth;
     }
     public static void main(String[] args){
-	String response;
-	System.out.println("\n\n\nWELCOME TO CHESS TITANS!!!\n\nMade by Devendra Shivraj and David Lee\n\n\nWould you like to view the Instruction Manual or play a Game?\n");
-	do{
-	    System.out.println("(Options are <Instruction Manual> or <Game>)\n");
-	    Scanner sc = new Scanner(System.in);
-	    response = sc.nextLine();
-	}
-	while(!(response.equals("Instruction Manual")) &&
-	      !(response.equals("Game")));
-	if (response.equals("Instruction Manual")){
-	    try{
-		File f = new File("manual.txt");
-		Scanner sc = new Scanner(f);
-		while (sc.hasNextLine()){
-		    System.out.println(sc.nextLine());
+	if (args.length != 0){
+	    Scanner fMoves = new Scanner (new File("chessMoves.txt"));
+	    ArrayList<String> moves = new ArrayList<String>();
+	    while (fMoves.hasNextLine()){
+		moves.add(fMoves.nextLine());
+	    }
+	    String gameSTR = (int)(Math.random() * moves.size());
+	    ArrayList<String> game = new ArrayList<String>();
+	    String str = "";
+	    for (int i = 0; i < gameSTR.length(); i++){
+		if (gameSTR.substring(i,i+1).equals(",")){
+		    game.add(str);
+		    str = "";
+		}
+		else{
+		    str += gameSTR.substring(i, i+1);
 		}
 	    }
-	    catch (Exception FileNotFoundException){
-		//this is something that should only get printed if the file is in the wrong place
-		System.out.println("Note to Programmer: manual.txt file not in correct directory");
-	    }
+	
+
+
+
 	}
+
+
+
+
+
 	else{
-	    String summary = "";
-	    //creating the game board
-	    Piece[][] board = new Piece[8][8];
-	    //black pieces
-	    board[0][0] = new Rook(false, "BR ");
-	    board[0][1] = new Knight(false, "BK ");
-	    board[0][2] = new Bishop(false, "BB ");
-	    board[0][3] = new Queen(false, "BQ ");
-	    board[0][5] = new Bishop(false, "BB ");
-	    board[0][6] = new Knight(false, "BK ");
-	    board[0][7] = new Rook(false, "BR ");
-	    board[0][4] = new King(false, "BK-");
-	    //white pieces
-	    board[7][0] = new Rook(true, "WR ");
-	    board[7][1] = new Knight(true, "WK ");
-	    board[7][2] = new Bishop(true, "WB ");
-	    board[7][3] = new Queen(true, "WQ ");
-	    board[7][5] = new Bishop(true, "WB ");
-	    board[7][6] = new Knight(true, "WK ");
-	    board[7][7] = new Rook(true, "WR ");
-	    board[7][4] = new King(true, "WK-");
-	     for (int i = 1; i < board.length - 1; i++){
-		for (int j = 0; j < board[i].length; j++){
-		    if (i == 1){
-			//black pawns
-			board[i][j] = new Pawn(false,"BP ", true);
-		    }
-		    else if (i == 6){
-			//white pawns
-			board[i][j] = new Pawn(true, "WP ",true);
-		    }
-		    else{
-			board[i][j] = new Piece(true, " - ");
-			//it's just a placeholder, color is unimportant
+	    String response;
+	    System.out.println("\n\n\nWELCOME TO CHESS TITANS!!!\n\nMade by Devendra Shivraj and David Lee\n\n\nWould you like to view the Instruction Manual or play a Game?\n");
+	    do{
+		System.out.println("(Options are <Instruction Manual> or <Game>)\n");
+		Scanner sc = new Scanner(System.in);
+		response = sc.nextLine();
+	    }
+	    while(!(response.equals("Instruction Manual")) &&
+		  !(response.equals("Game")));
+	    if (response.equals("Instruction Manual")){
+		try{
+		    File f = new File("manual.txt");
+		    Scanner sc = new Scanner(f);
+		    while (sc.hasNextLine()){
+			System.out.println(sc.nextLine());
 		    }
 		}
-	    }
-	    int i = 1;
-	    summary += displayBoard(board);
-	    System.out.println("\n" + displayBoard(board));
-	    while (!checkmate(1,board) &&
-		   !checkmate(2,board)){
-		do{
-		    if (i % 2 == 1){
-			System.out.println("It's white's turn\n");
-		    }
-		    if (i % 2 == 0){
-			System.out.println("It's black's turn\n");
-		    }
-		    //Once a piece has been moved (or the game has started) the player whose turn it is will be notified
-		    System.out.println("(Proper format is location of piece <Letter><Number> and endspot <Letter><Number>)\n");
-		    Scanner sc = new Scanner (System.in);
-		    response = sc.nextLine();
-		    Piece[][] tiger = copyOf(board);
-		    //the function of "tiger" is to check if moving the piece will put the player whose turn it is in check (if so, then it's not a valid move)
-		    if (correctFormat(response)){
-			boolean truth = false;
-			move(i, tiger,Integer.parseInt(response.charAt(1)+"")-1,(int)(response.charAt(0))-(int)'A',Integer.parseInt(response.charAt(4)+"")-1,(int)(response.charAt(3))-(int)'A');
-			if (!inCheck(i+1, tiger)){
-			    truth = move(i,board,Integer.parseInt(response.charAt(1)+"")-1,(int)(response.charAt(0))-(int)'A',Integer.parseInt(response.charAt(4)+"")-1,(int)(response.charAt(3)) - (int)'A');
-			    morph(board);
-			    if (board[Integer.parseInt(response.charAt(4) + "") - 1][(int)(response.charAt(3)) - (int)'A'] instanceof Pawn){
-				((Pawn)(board[Integer.parseInt(response.charAt(4) + "") - 1][(int)(response.charAt(3)) - (int)'A'])).setFirstMove(false);
-			    }
-			    if (inCheck(i,board)){
-				if (checkmate(i, board)){
-				    break;
-				}
-				switchPerspective(board);
-				String str,r;
-				if (i % 2 == 1){
-				    str = "Black";
-				}
-				else{
-				    str = "White";
-				}
-				Piece[][] temp = null;
-				//the purpose of temp, is to force the player who's in check to make a move that will get themself out of check
-				do{
-				    System.out.println(str + " Player is in Check\n");
-				    System.out.println("\n" + displayBoard(board));
-				    System.out.println("(Proper format is location of piece <Letter><Number> and endspot <Letter><Number>)\n");
-				    Scanner s = new Scanner(System.in);
-				    r = s.nextLine();
-				    if (correctFormat(r)){
-					temp = copyOf(board);
-					move(i + 1, temp, Integer.parseInt(r.charAt(1) + "") - 1,(int)(r.charAt(0)) - (int)'A',Integer.parseInt(r.charAt(4) + "")-1,(int)(r.charAt(3))-(int)'A');
-				    }
-				}
-				while (!correctFormat(r) || inCheck(i,temp));
-				if(move(i+1, board,Integer.parseInt(r.charAt(1) + "") - 1,(int)(r.charAt(0)) - (int)'A',Integer.parseInt(r.charAt(4) + "") - 1,(int)(r.charAt(3)) - (int)'A')){
-				    summary += displayBoard(board);
-				}
-				morph(board);
-				if (board[Integer.parseInt(r.charAt(4) + "") - 1][(int)(r.charAt(3)) - (int)'A'] instanceof Pawn){
-				    ((Pawn)(board[Integer.parseInt(r.charAt(4) + "") - 1][(int)(r.charAt(3)) - (int)'A'])).setFirstMove(false);
-				}
-				i++;
-			    }
-			    if (truth){
-				i++;
-				summary += displayBoard(board);
-				switchPerspective(board);
-			    }
-			}
-		    }
-		    System.out.println("\n" + displayBoard(board));
+		catch (Exception FileNotFoundException){
+		    //this is something that should only get printed if the file is in the wrong place
+		    System.out.println("Note to Programmer: manual.txt file not in correct directory");
 		}
-		while (!correctFormat(response));
-	    }
-	    String str = "",s = "";
-	    if (!checkmate(2,board)){
-		str += "Black";
-		s += "White";
 	    }
 	    else{
-		str += "White";
-		s += "Black";
-	    }
-	    switchPerspective(board);
-	    System.out.println(displayBoard(board)+"\n\n"+str + " Player is in Checkmate\n\n\n\nCongratulations " + s + " Player!!! You have won the Game!!!\n\n" );
-	    Scanner end;
-	    String res;
-	    do{
-		System.out.println("Would you like to see a summary of the game");
-		System.out.println("\n(Options are <yes> or <no>)\n");
-		end = new Scanner(System.in);
-		res = end.nextLine();
-	    }
-	    while(!res.equals("yes") &&
-		  !res.equals("no"));
-	    if (res.equals("yes")){
-		System.out.println(summary + displayBoard(board));
+		String summary = "";
+		//creating the game board
+		Piece[][] board = new Piece[8][8];
+		//black pieces
+		board[0][0] = new Rook(false, "BR ");
+		board[0][1] = new Knight(false, "BK ");
+		board[0][2] = new Bishop(false, "BB ");
+		board[0][3] = new Queen(false, "BQ ");
+		board[0][5] = new Bishop(false, "BB ");
+		board[0][6] = new Knight(false, "BK ");
+		board[0][7] = new Rook(false, "BR ");
+		board[0][4] = new King(false, "BK-");
+		//white pieces
+		board[7][0] = new Rook(true, "WR ");
+		board[7][1] = new Knight(true, "WK ");
+		board[7][2] = new Bishop(true, "WB ");
+		board[7][3] = new Queen(true, "WQ ");
+		board[7][5] = new Bishop(true, "WB ");
+		board[7][6] = new Knight(true, "WK ");
+		board[7][7] = new Rook(true, "WR ");
+		board[7][4] = new King(true, "WK-");
+		 for (int i = 1; i < board.length - 1; i++){
+		    for (int j = 0; j < board[i].length; j++){
+			if (i == 1){
+			    //black pawns
+			    board[i][j] = new Pawn(false,"BP ", true);
+			}
+			else if (i == 6){
+			    //white pawns
+			    board[i][j] = new Pawn(true, "WP ",true);
+			}
+			else{
+			    board[i][j] = new Piece(true, " - ");
+			    //it's just a placeholder, color is unimportant
+			}
+		    }
+		}
+		int i = 1;
+		summary += displayBoard(board);
+		System.out.println("\n" + displayBoard(board));
+		while (!checkmate(1,board) &&
+		       !checkmate(2,board)){
+		    do{
+			if (i % 2 == 1){
+			    System.out.println("It's white's turn\n");
+			}
+			if (i % 2 == 0){
+			    System.out.println("It's black's turn\n");
+			}
+			//Once a piece has been moved (or the game has started) the player whose turn it is will be notified
+			System.out.println("(Proper format is location of piece <Letter><Number> and endspot <Letter><Number>)\n");
+			Scanner sc = new Scanner (System.in);
+			response = sc.nextLine();
+			Piece[][] tiger = copyOf(board);
+			//the function of "tiger" is to check if moving the piece will put the player whose turn it is in check (if so, then it's not a valid move)
+			if (correctFormat(response)){
+			    boolean truth = false;
+			    move(i, tiger,Integer.parseInt(response.charAt(1)+"")-1,(int)(response.charAt(0))-(int)'A',Integer.parseInt(response.charAt(4)+"")-1,(int)(response.charAt(3))-(int)'A');
+			    if (!inCheck(i+1, tiger)){
+				truth = move(i,board,Integer.parseInt(response.charAt(1)+"")-1,(int)(response.charAt(0))-(int)'A',Integer.parseInt(response.charAt(4)+"")-1,(int)(response.charAt(3)) - (int)'A');
+				morph(board);
+				if (board[Integer.parseInt(response.charAt(4) + "") - 1][(int)(response.charAt(3)) - (int)'A'] instanceof Pawn){
+				    ((Pawn)(board[Integer.parseInt(response.charAt(4) + "") - 1][(int)(response.charAt(3)) - (int)'A'])).setFirstMove(false);
+				}
+				if (inCheck(i,board)){
+				    if (checkmate(i, board)){
+					break;
+				    }
+				    switchPerspective(board);
+				    String str,r;
+				    if (i % 2 == 1){
+					str = "Black";
+				    }
+				    else{
+					str = "White";
+				    }
+				    Piece[][] temp = null;
+				    //the purpose of temp, is to force the player who's in check to make a move that will get themself out of check
+				    do{
+					System.out.println(str + " Player is in Check\n");
+					System.out.println("\n" + displayBoard(board));
+					System.out.println("(Proper format is location of piece <Letter><Number> and endspot <Letter><Number>)\n");
+					Scanner s = new Scanner(System.in);
+					r = s.nextLine();
+					if (correctFormat(r)){
+					    temp = copyOf(board);
+					    move(i + 1, temp, Integer.parseInt(r.charAt(1) + "") - 1,(int)(r.charAt(0)) - (int)'A',Integer.parseInt(r.charAt(4) + "")-1,(int)(r.charAt(3))-(int)'A');
+					}
+				    }
+				    while (!correctFormat(r) || inCheck(i,temp));
+				    if(move(i+1, board,Integer.parseInt(r.charAt(1) + "") - 1,(int)(r.charAt(0)) - (int)'A',Integer.parseInt(r.charAt(4) + "") - 1,(int)(r.charAt(3)) - (int)'A')){
+					summary += displayBoard(board);
+				    }
+				    morph(board);
+				    if (board[Integer.parseInt(r.charAt(4) + "") - 1][(int)(r.charAt(3)) - (int)'A'] instanceof Pawn){
+					((Pawn)(board[Integer.parseInt(r.charAt(4) + "") - 1][(int)(r.charAt(3)) - (int)'A'])).setFirstMove(false);
+				    }
+				    i++;
+				}
+				if (truth){
+				    i++;
+				    summary += displayBoard(board);
+				    switchPerspective(board);
+				}
+			    }
+			}
+			System.out.println("\n" + displayBoard(board));
+		    }
+		    while (!correctFormat(response));
+		}
+		String str = "",s = "";
+		if (!checkmate(2,board)){
+		    str += "Black";
+		    s += "White";
+		}
+		else{
+		    str += "White";
+		    s += "Black";
+		}
+		switchPerspective(board);
+		System.out.println(displayBoard(board)+"\n\n"+str + " Player is in Checkmate\n\n\n\nCongratulations " + s + " Player!!! You have won the Game!!!\n\n" );
+		Scanner end;
+		String res;
+		do{
+		    System.out.println("Would you like to see a summary of the game");
+		    System.out.println("\n(Options are <yes> or <no>)\n");
+		    end = new Scanner(System.in);
+		    res = end.nextLine();
+		}
+		while(!res.equals("yes") &&
+		      !res.equals("no"));
+		if (res.equals("yes")){
+		    System.out.println(summary + displayBoard(board));
+		}
 	    }
 	}
     }
