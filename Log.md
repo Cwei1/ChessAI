@@ -9,3 +9,6 @@
 6/4/14 - Devendra - Switched gears and started working on the play-game-file-reader using a different chess algorithm.
 
 6/4/14 - Dionis - Checkmate works and other minor fixes and code cleanup.
+
+6/5/14 - Dionis - The scanner now reads Castles and the bad gui  is a  bit better. Also instead of the asking to autoplay now it is java Run "name of file".
+There are currently 2 files. "auto.txt" and "test.txt".

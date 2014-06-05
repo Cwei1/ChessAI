@@ -15,7 +15,6 @@ public class Run{
 	Gui main = new Gui(g);
 	main.setVisible(true);
 	int turn=0;
-	boolean auto=false;
 	String response = "";
 	Scanner s=new Scanner(System.in);
 	if(args.length>0){
@@ -23,7 +22,6 @@ public class Run{
 		s= new Scanner(new File(args[0]));
 	    }catch(FileNotFoundException e){
 		System.out.println("File not found!");
-		auto=true;
 	    }
 	}
 	System.out.println(g);
@@ -45,10 +43,8 @@ public class Run{
 		break;
 	    }
 	    if(l.equals("Castle")){
-		System.out.println("Choose the king then the piece to castle.\t");
-		String move=s.nextLine();
 		if(x.equals("White")){
-		    if(!g.castle(true,move)){
+		    if(!g.castle(true)){
 			System.out.println(g);
 			System.out.println("Illegal Move!");
 		    }else{
@@ -56,7 +52,7 @@ public class Run{
 			turn++;
 		    }
 		}else{
-		    if(!g.castle(false,move)){
+		    if(!g.castle(false)){
 			System.out.println(g);
 			System.out.println("Illegal Move!");
 		    }else{

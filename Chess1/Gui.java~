@@ -24,7 +24,7 @@ public class Gui extends javax.swing.JFrame {
         chessboardmain.setLayout(new GridLayout(8, 8));
 	for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-	       chessboardmain.add(g.pattern[x][7-y]);
+	       chessboardmain.add(g.pattern[x][y]);
 	    }
 	}
         piecegridmain.setMaximumSize(new Dimension(578, 578));
@@ -32,7 +32,7 @@ public class Gui extends javax.swing.JFrame {
         piecegridmain.setLayout(new GridLayout(8, 8));
 	for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-			piecegridmain.add(g.getBoard()[x][7-y].getAvatar());
+			piecegridmain.add(g.getBoard()[x][y].getAvatar());
 	    }
 	}
 
@@ -63,10 +63,6 @@ public class Gui extends javax.swing.JFrame {
                 .addContainerGap())
 		); 
         pack();
-	setMaximumSize(new Dimension(640,640));
-	setMinimumSize(new Dimension(640,640));
-	setSize(640,640);
-	setTitle("bad gui");
     }       
     public void refresh(GameBoard g){
 	for(int y = 0; y < 8; y++){             
@@ -76,7 +72,7 @@ public class Gui extends javax.swing.JFrame {
 	}
 	for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-		piecegridmain.add(g.getBoard()[x][7-y].getAvatar());
+		piecegridmain.add(g.getBoard()[x][y].getAvatar());
 	    }
 	}
 	piecegridmain.validate();
