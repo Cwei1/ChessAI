@@ -6,21 +6,18 @@ import java.awt.image.BufferedImage;
 
 public abstract class Piece{
     Player owner;
-    int l, w;
     Coordinate location;
     boolean first;
     ArrayList<Coordinate> moves;
     JButton avatar;
     BufferedImage buttonIcon;
-    public Piece(Player a, Coordinate location, int l, int w){
-	this.l = l;
-	this.w = w;
+    public Piece(Player a, Coordinate location){
 	setPlayer(a);
 	setLocation(location);
         avatar = new JButton();
     }
-    public Piece(Coordinate location, int l, int w){
-	this(new Player(true),location,l,w);
+    public Piece(Coordinate location){
+	this(new Player(true),location);
 	first=true;
     }
     public void setFirst(boolean a){
@@ -51,6 +48,7 @@ public abstract class Piece{
 	    avatar.setBorder(BorderFactory.createEmptyBorder());
 	    avatar.setContentAreaFilled(false);
     }
+    public void setImage(){}
     public boolean isWhite(){
 	return owner.isWhite();
     }
@@ -59,6 +57,9 @@ public abstract class Piece{
     }
     public int gety(){
 	return location.gety();
+    }
+    public Player getPlayer(){
+	return owner;
     }
     public void setxy(int x, int y){
 	location.setxy(x,y);
@@ -72,11 +73,18 @@ public abstract class Piece{
     public JButton getAvatar(){
 	return avatar;
     }
+    public ArrayList<Coordinate> getMoves(GameBoard g){
+	moves(g);
+	return moves;
+    }
+    public void moves(GameBoard g){
+	moves=new ArrayList<Coordinate>();
+    }
     //------------------------- Rook Moves ----------------------------
     public void rook(GameBoard g){
-	Piece temp= new NullPiece(getLocation(),l,w);
+	Piece temp= new NullPiece(getLocation());
 	boolean done=false;
-	for(int i=1;i<l-gety();i++){
+	for(int i=1;i<8-gety();i++){
 	    if(!done){
 		temp=g.getPiece(getx(),gety()+i);
 		if(temp instanceof NullPiece){	    
@@ -104,7 +112,7 @@ public abstract class Piece{
 	    }
 	}
 	done=false;
-	for(int i=1;i<w-getx();i++){
+	for(int i=1;i<8-getx();i++){
 	    if(!done){
 		temp=g.getPiece(getx()+i,gety());
 		if(temp instanceof NullPiece){
@@ -134,13 +142,13 @@ public abstract class Piece{
     }
     //------------------------------Bishop moves -----------------------------
     public void bishop(GameBoard g){
-	Piece temp= new NullPiece(l,w);
+	Piece temp= new NullPiece();
 	boolean d1=false;
 	boolean d2=false;
 	boolean d3=false;
 	boolean d4=false;
 	int i=1;
-	while(i<l&&i<w){
+	while(i<8){
 	    if(!d1){
 		try{
 		    temp=g.getPiece(getx()+i,gety()+i);

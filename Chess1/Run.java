@@ -3,12 +3,13 @@ import java.io.*;
 
 public class Run{
     public static void main(String[]args){
-	GameBoard g= new GameBoard(8,8);
+	GameBoard g= new GameBoard();
 	g.initialize();
 	Gui main = new Gui(g);
 	main.setVisible(true);
 	int turn=0;
 	String response = "";
+	Scanner s=new Scanner(System.in);
 	do{
 	    System.out.println("Would you like to play a game,or see one played? options are: <play> and <auto>");
 	    Scanner sc = new Scanner(System.in);
@@ -16,7 +17,6 @@ public class Run{
 	}
 	while(!(response.equals("play")) &&
 	      !(response.equals("auto")));
-	Scanner s = null;
 	if (response.equals("play")){
 	    s=new Scanner(System.in);
 	}
@@ -72,8 +72,8 @@ public class Run{
 		    Piece px=g.getPiece(x1,y1);
 		    if(px instanceof NullPiece ||(px.isWhite()&&x.equals("Black"))||(!px.isWhite()&&x.equals("White"))){
 			System.out.println(g);
-			System.out.println("Invalid move!");
-		    }else if(g.movePiece(x1,y1,x2,y2)){
+			System.out.println("Invalid move!here");
+		    }else if(g.movePiece(x1,y1,x2,y2,true)){
 			System.out.println(g);
 			if(g.inCheckW()){
 			    System.out.println("Check!");
@@ -86,8 +86,9 @@ public class Run{
 			System.out.println("Illegal move!");
 		    }
 		}catch(Exception e){
+		    e.printStackTrace();
 		    System.out.println(g);
-		    System.out.println("Invalid move!");
+		    System.out.println("Invalid move!there");
 		}
 	    }else{
 		System.out.println(g);

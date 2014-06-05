@@ -1,9 +1,9 @@
 public class NullPiece extends Piece{
-    public NullPiece(Coordinate location, int l, int w){
-	super(location,l,w);
+    public NullPiece(Coordinate location){
+	super(location);
     }
-    public NullPiece(int l, int w){
-	this(new Coordinate(0,0),l,w);
+    public NullPiece(){
+	this(new Coordinate(0,0));
     }
     public String toString(){
 	return "_";

@@ -1,26 +1,26 @@
 import java.util.*;
 import javax.swing.*;
 public class Pawn extends Piece{
-    public Pawn(Coordinate location, int l, int w){
-	super(location,l,w);
+    public Pawn(Coordinate location){
+	super(location);
 	first=true;
     }
     public void setImage(){
 	super.setImage("bpawn.png","wpawn.png");
     }
     public Piece upgrade(){
-	Piece p = new NullPiece(l,w);
+	Piece p = new NullPiece();
 	Scanner s=new Scanner(System.in);
 	System.out.println("Choose a piece for your pawn to upgrade into. The choices are Knight, Rook, Bishop, Queen\n");
 	String ln= s.nextLine();
 	if(ln.equals("Knight")){
-	    p=new Knight(getLocation(),l,w);
+	    p=new Knight(getLocation());
 	}else if(ln.equals("Rook")){
-	    p=new Rook(getLocation(),l,w);
+	    p=new Rook(getLocation());
 	}else if(ln.equals("Bishop")){
-	    p=new Bishop(getLocation(),l,w);
+	    p=new Bishop(getLocation());
 	}else if(ln.equals("Queen")){
-	    p=new Queen(getLocation(),l,w);
+	    p=new Queen(getLocation());
 	}
 	p.setPlayer(new Player(isWhite()));
 	p.setFirst(false);
@@ -32,7 +32,7 @@ public class Pawn extends Piece{
     }
     public void moves(GameBoard g){
 	moves = new ArrayList<Coordinate>();
-	Piece temp= new NullPiece(new Coordinate(0,0),l,w);
+	Piece temp= new NullPiece(new Coordinate(0,0));
 	int w=-1;
 	if(isWhite()){
 	    w=1;

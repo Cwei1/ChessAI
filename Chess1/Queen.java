@@ -1,7 +1,7 @@
 import java.util.*;
 public class Queen extends Piece{
-    public Queen(Coordinate location, int l, int w){
-	super(location,l,w);
+    public Queen(Coordinate location){
+	super(location);
     }
     public void setImage(){
 	super.setImage("bqueen.png","wqueen.png");

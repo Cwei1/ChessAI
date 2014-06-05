@@ -1,7 +1,7 @@
 import java.util.*;
 public class Rook extends Piece{
-    public Rook(Coordinate location, int l, int w){
-	super(location,l,w);
+    public Rook(Coordinate location){
+	super(location);
     }
     public void setImage(){
 	super.setImage("brook.png","wrook.png");

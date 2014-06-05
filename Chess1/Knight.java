@@ -1,7 +1,7 @@
 import java.util.*;
 public class Knight extends Piece{
-    public Knight(Coordinate location, int l, int w){
-	super(location,l,w);
+    public Knight(Coordinate location){
+	super(location);
     }
     public void setImage(){
 	super.setImage("bknight.png","wknight.png");
@@ -12,7 +12,7 @@ public class Knight extends Piece{
     }
     public void moves(GameBoard g){
     moves = new ArrayList<Coordinate>();
-    Piece temp= new NullPiece(l,w);
+    Piece temp= new NullPiece();
     try{
         temp=g.getPiece(getx()+1,gety()+2);
         if((temp.isWhite()&&!isWhite())||(!temp.isWhite()&&isWhite())||temp instanceof NullPiece){

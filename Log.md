@@ -7,3 +7,5 @@
 6/3/14 - Devendra - Worked on writing a file that can play an entire chess game by reading prewritten moves off of a text file.
 
 6/4/14 - Devendra - Switched gears and started working on the play-game-file-reader using a different chess algorithm.
+
+6/4/14 - Dionis - Checkmate works and other minor fixes and code cleanup.
