@@ -6,26 +6,9 @@ public class Pawn extends Piece{
 	first=true;
     }
     public void setImage(){
-	super.setImage("bpawn.png","wpawn.png");
+	super.setImage("Pics/bpawn.png","Pics/wpawn.png");
     }
-    public Piece upgrade(){
-	Piece p = new NullPiece();
-	Scanner s=new Scanner(System.in);
-	System.out.println("Choose a piece for your pawn to upgrade into. The choices are Knight, Rook, Bishop, Queen\n");
-	String ln= s.nextLine();
-	if(ln.equals("Knight")){
-	    p=new Knight(getLocation());
-	}else if(ln.equals("Rook")){
-	    p=new Rook(getLocation());
-	}else if(ln.equals("Bishop")){
-	    p=new Bishop(getLocation());
-	}else if(ln.equals("Queen")){
-	    p=new Queen(getLocation());
-	}
-	p.setPlayer(new Player(isWhite()));
-	p.setFirst(false);
-	return p;
-    }
+
     public ArrayList<Coordinate> getMoves(GameBoard g){
 	moves(g);
 	return moves;

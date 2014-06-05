@@ -48,6 +48,16 @@ public abstract class Piece{
 	    avatar.setBorder(BorderFactory.createEmptyBorder());
 	    avatar.setContentAreaFilled(false);
     }
+    public void setImage(JButton p,BufferedImage b){
+	avatar=p;
+	buttonIcon=b;
+    }
+    public JButton getAvatar(){
+	return avatar;
+    }
+    public BufferedImage getPic(){
+	return buttonIcon;
+    }
     public void setImage(){}
     public boolean isWhite(){
 	return owner.isWhite();
@@ -69,9 +79,6 @@ public abstract class Piece{
     }
     public Coordinate getLocation(){
 	return location;
-    }
-    public JButton getAvatar(){
-	return avatar;
     }
     public ArrayList<Coordinate> getMoves(GameBoard g){
 	moves(g);

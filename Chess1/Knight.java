@@ -4,7 +4,7 @@ public class Knight extends Piece{
 	super(location);
     }
     public void setImage(){
-	super.setImage("bknight.png","wknight.png");
+	super.setImage("Pics/bknight.png","Pics/wknight.png");
     }
     public ArrayList<Coordinate> getMoves(GameBoard g){
 	moves(g);

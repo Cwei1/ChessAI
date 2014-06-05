@@ -4,7 +4,7 @@ public class Bishop extends Piece{
 	super(location);
     }
     public void setImage(){
-	super.setImage("bbishop.png","wbishop.png");
+	super.setImage("Pics/bbishop.png","Pics/wbishop.png");
     }
     public ArrayList<Coordinate> getMoves(GameBoard g){
 	moves(g);

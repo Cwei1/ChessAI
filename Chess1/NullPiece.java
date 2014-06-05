@@ -9,6 +9,6 @@ public class NullPiece extends Piece{
 	return "_";
     }
     public void setImage(){
-	super.setImage("null.png","null.png");
+	super.setImage("Pics/null.png","Pics/null.png");
     }
 } 

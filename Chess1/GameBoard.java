@@ -5,8 +5,8 @@ public class GameBoard{
     protected JLabel[][] pattern;
     protected boolean checkmate,stalemate;
     protected Player p1, p2;
-    private String light = "light.jpg";
-    private String dark ="dark.jpg";
+    private String light = "Pics/light.jpg";
+    private String dark ="Pics/dark.jpg";
     private String now = light; 
     private boolean bck,wck;
     public GameBoard(){ 
@@ -58,7 +58,24 @@ public class GameBoard{
 	Piece[][] temp = new Piece[board.length][board[0].length];
 	for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
-		temp[i][j] = board[i][j];
+		Coordinate c=new Coordinate(board[i][j].getx(),board[i][j].gety());
+		if(board[i][j] instanceof Pawn){
+		    temp[i][j]=new Pawn(c);
+		}else if(board[i][j] instanceof Rook){
+		    temp[i][j]=new Rook(c);
+		}else if(board[i][j] instanceof Knight){
+		    temp[i][j]=new Knight(c);
+		}else if(board[i][j] instanceof Bishop){
+		    temp[i][j]=new Bishop(c);
+		}else if(board[i][j] instanceof Queen){
+		    temp[i][j]=new Queen(c);
+		}else if(board[i][j] instanceof King){
+		    temp[i][j]=new King(c);
+		}else{
+		    temp[i][j]=new NullPiece(c);
+		}
+		temp[i][j].setPlayer(board[i][j].getPlayer());
+		temp[i][j].setImage(board[i][j].getAvatar(),board[i][j].getPic());
 	    }
 	}
 	return temp;
@@ -151,8 +168,8 @@ public class GameBoard{
 			return false;
 		    }
 		}
-		board[px.getx()-3][px.gety()]=px;
-		board[px.getx()-3][px.gety()].setxy(px.getx()-3,px.gety());
+		board[px.getx()-2][px.gety()]=px;
+		board[px.getx()-2][px.gety()].setxy(px.getx()-2,px.gety());
 		board[px.getx()+1][px.gety()]=rk;
 		board[px.getx()+1][px.gety()].setxy(px.getx()+1,px.gety());
 		board[px.getx()][px.gety()].setFirst(false);
@@ -167,6 +184,21 @@ public class GameBoard{
 	    return false;
 	}
     } 
+    public void upgrade(Piece x,String ln){
+	Piece p = new NullPiece();
+	if(ln.equals("Knight")){
+	    p=new Knight(x.getLocation());
+	}else if(ln.equals("Rook")){
+	    p=new Rook(x.getLocation());
+	}else if(ln.equals("Bishop")){
+	    p=new Bishop(x.getLocation());
+	}else if(ln.equals("Queen")){
+	    p=new Queen(x.getLocation());
+	}
+	p.setPlayer(x.getPlayer());
+	p.setImage();
+	board[x.getx()][x.gety()]=p;
+    }
     //-----------------------------------Moving a piece--------------------------------------------
     public boolean movePiece(int x,int y, int a, int b,boolean check){
 	Coordinate temp=new Coordinate(a,b);
@@ -180,10 +212,7 @@ public class GameBoard{
 		board[x][y]=new NullPiece(new Coordinate(x,y));
 		((NullPiece)board[x][y]).setImage();
 		getPiece(a,b).setxy(a,b);
-		p.setFirst(false);	
-		if(getPiece(a,b) instanceof Pawn&&((getPiece(a,b).isWhite()&&b==7)||(!getPiece(a,b).isWhite()&&b==0))){
-		    board[a][b]=((Pawn)getPiece(a,b)).upgrade();
-		}
+		p.setFirst(false);
 		inCheck(check);
 		return true;
 	    }	 
@@ -246,10 +275,18 @@ public class GameBoard{
 	for(int i=0;i<8;i++){
 	    for(int j=0;j<8;j++){
 		Piece temp= board[i][j];
+		boolean first=board[i][j].isFirst();
 		if((white && temp.isWhite())||(!white && !temp.isWhite())){
 		    ArrayList<Coordinate> moves= temp.getMoves(this);
 		    for(Coordinate c: moves){
 			movePiece(i,j,c.getx(),c.gety(),false);
+		        for(int a=0;a<8;a++){
+			    for(int b=0;b<8;b++){
+				board[a][b]=fake[a][b];
+				board[a][b].setxy(a,b);
+				board[a][b].setFirst(first);
+			    }
+			}
 			if(white && !wck){
 			    checkmate=false;
 			    return;
@@ -257,11 +294,6 @@ public class GameBoard{
 			    checkmate=false;
 			    return;
 			}		
-		        for(int a=0;a<8;a++){
-			    for(int b=0;b<8;b++){
-				board[a][b]=fake[a][b];
-			    }
-			}
 		    }
 		}
 	    }

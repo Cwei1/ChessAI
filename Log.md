@@ -10,5 +10,5 @@
 
 6/4/14 - Dionis - Checkmate works and other minor fixes and code cleanup.
 
-6/5/14 - Dionis - The scanner now reads Castles and the bad gui  is a  bit better. Also instead of the asking to autoplay now it is java Run "name of file".
-There are currently 2 files. "auto.txt" and "test.txt".
+6/5/14 - Dionis - The scanner now reads Castles and upgrades and the bad gui  is a  bit better. Also instead of the asking to autoplay now it is java Run "name of file".
+There are currently 3 files. "g0.txt" ,"g1.txt" and "g2.txt". Fix a bunch of annoying bugs.

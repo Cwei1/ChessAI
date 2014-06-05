@@ -4,7 +4,7 @@ import java.io.*;
 public class Run{
     public static void delay(){
 	try {
-	    Thread.sleep(3000);
+	    Thread.sleep(100);
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}
@@ -20,7 +20,8 @@ public class Run{
 	Scanner s=new Scanner(System.in);
 	if(args.length>0){
 	    try{
-		s= new Scanner(new File(args[0]));
+		s= new Scanner(new File("Games/"+args[0]));
+		auto=true;
 	    }catch(FileNotFoundException e){
 		System.out.println("File not found!");
 		auto=true;
@@ -73,25 +74,32 @@ public class Run{
 		    Piece px=g.getPiece(x1,y1);
 		    if(px instanceof NullPiece ||(px.isWhite()&&x.equals("Black"))||(!px.isWhite()&&x.equals("White"))){
 			System.out.println(g);
-			System.out.println("Invalid move!here");
+			System.out.println("Invalid move!");
 		    }else if(g.movePiece(x1,y1,x2,y2,true)){
+			if(g.getPiece(x2,y2) instanceof Pawn&&((g.getPiece(x2,y2).isWhite()&&y2==7)||(!g.getPiece(x2,y2).isWhite()&&y2==0))){
+			    System.out.println("Choose a piece for your pawn to upgrade into. The choices are Knight, Rook, Bishop, Queen\n");
+			    String upgrade= s.nextLine();
+			    g.upgrade(g.getPiece(x2,y2),upgrade);
+			}
 			System.out.println(g);
 			turn++;
 		    }else{
 			System.out.println(g);
-			System.out.println("Illegal move!");
+			System.out.println("Illegal move!here");
 		    }
 		}catch(Exception e){
 		    e.printStackTrace();
 		    System.out.println(g);
-		    System.out.println("Invalid move!there");
+		    System.out.println("Invalid move!");
 		}
 	    }else{
 		System.out.println(g);
 		System.out.println("Use format:a3 b4");
 	    }
+		if(auto){
+		    delay();
+		}
 		main.refresh(g);
-		delay();
 	}
 	System.out.println(g.win());	
     }

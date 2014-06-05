@@ -4,7 +4,7 @@ public class King extends Piece{
 	super(location);
     }
     public void setImage(){
-	super.setImage("bking.png","wking.png");
+	super.setImage("Pics/bking.png","Pics/wking.png");
     }
     public ArrayList<Coordinate> getMoves(GameBoard g){
 	moves(g);
