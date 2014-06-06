@@ -271,20 +271,17 @@ public class GameBoard{
     }
     public void checkmate(boolean white){
 	checkmate=true;
-	Piece[][]fake=copyOf();
 	for(int i=0;i<8;i++){
 	    for(int j=0;j<8;j++){
 		Piece temp= board[i][j];
-		boolean first=board[i][j].isFirst();
 		if((white && temp.isWhite())||(!white && !temp.isWhite())){
 		    ArrayList<Coordinate> moves= temp.getMoves(this);
 		    for(Coordinate c: moves){
+			Piece[][]fake=copyOf();
 			movePiece(i,j,c.getx(),c.gety(),false);
 		        for(int a=0;a<8;a++){
 			    for(int b=0;b<8;b++){
 				board[a][b]=fake[a][b];
-				board[a][b].setxy(a,b);
-				board[a][b].setFirst(first);
 			    }
 			}
 			if(white && !wck){
