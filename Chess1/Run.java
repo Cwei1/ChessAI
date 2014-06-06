@@ -2,9 +2,9 @@ import java.util.*;
 import java.io.*;
 
 public class Run{
-    public static void delay(){
+    public static void delay(int time){
 	try {
-	    Thread.sleep(100);
+	    Thread.sleep(time);
 	} catch(InterruptedException ex) {
 	    Thread.currentThread().interrupt();
 	}
@@ -97,7 +97,7 @@ public class Run{
 		System.out.println("Use format:a3 b4");
 	    }
 		if(auto){
-		    delay();
+		    delay(250);
 		}
 		main.refresh(g);
 	}
