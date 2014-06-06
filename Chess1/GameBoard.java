@@ -76,6 +76,7 @@ public class GameBoard{
 		}
 		temp[i][j].setPlayer(board[i][j].getPlayer());
 		temp[i][j].setImage(board[i][j].getAvatar(),board[i][j].getPic());
+		temp[i][j].setFirst(board[i][j].isFirst());
 	    }
 	}
 	return temp;
