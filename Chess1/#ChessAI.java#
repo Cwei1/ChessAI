@@ -1,0 +1,18 @@
+import java.util.*;
+import java.io.*;
+public class ChessAI{
+    private PriorityQueue<Coordinate> moves;
+    private boolean color;
+    
+    public ChessAI (boolean color){
+	this.color = color;
+	moves = new PriorityQueue<Coordinate>();
+    }
+
+    public void getMoves (){
+	
+
+    }
+    
+
+}
