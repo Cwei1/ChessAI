@@ -23,3 +23,5 @@ There are currently 3 files. "g0.txt" ,"g1.txt" and "g2.txt". Fix a bunch of ann
 I added 2 more complete game files (g3.txt,g4.txt) 
 
 6/5/14 - Cardy - Adapted GUI functionailites to code and cleaned up Run, Gameboard, Piece, and GUI classes
+
+6/9/14 - Devendra, Dionis - Starting work on writing the ChessAI file

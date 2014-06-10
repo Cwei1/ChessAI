@@ -40,6 +40,7 @@ public class Run{
 	    String l = "";
 	    try {
 		l=s.nextLine();
+		System.out.println(l + "\n");
 	    }
 	    catch (NoSuchElementException e){
 		System.out.println("Game is over");
