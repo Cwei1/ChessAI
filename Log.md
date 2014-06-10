@@ -1,8 +1,8 @@
-6/1/14 - Dionis - Uploaded prewritten files for a Chess game that is a gui (checkmate not functional and gui non-interactable)
+6/1/14 - Dionis - Uploaded files for a Chess game that is a gui (checkmate not functional and gui non-interactable)
 
-6/1/14 - Cardy - Researched GUI functionailities(button interface)
+6/1/14 - Cardy - Researched GUI functionalities(button interface)
 
-6/2/14 - Devendra - Uploaded prewritten files for a terminal-based Chess game (castling not functional)
+6/2/14 - Devendra - Uploaded files for a terminal-based Chess game (castling not functional)
 
 6/3/14 - Dionis - Cleaning up chess code.
 
@@ -23,3 +23,7 @@ There are currently 3 files. "g0.txt" ,"g1.txt" and "g2.txt". Fix a bunch of ann
 I added 2 more complete game files (g3.txt,g4.txt) 
 
 6/5/14 - Cardy - Adapted GUI functionailites to code and cleaned up Run, Gameboard, Piece, and GUI classes
+
+6/9/14 - Devendra, Dionis - Starting work on writing the ChessAI file
+
+6/9/14 - Cardy - Researched ways that ChessAI's use Trees and Maps to think of moves. Fixed bugs.
