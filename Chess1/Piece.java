@@ -54,6 +54,10 @@ public abstract class Piece{
     public BufferedImage getPic(){
 	return buttonIcon;
     }
+    public void setImage(ImageIcon i,BufferedImage b){
+	avatar=i;
+	buttonIcon=b;
+    }
     public void setImage(){}
     public boolean isWhite(){
 	return owner.isWhite();

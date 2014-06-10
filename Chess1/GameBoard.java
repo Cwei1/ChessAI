@@ -58,8 +58,6 @@ public class GameBoard{
 	Piece[][] temp = new Piece[board.length][board[0].length];
 	for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
-		temp[i][j]=board[i][j];
-		/*
 		Coordinate c=new Coordinate(board[i][j].getx(),board[i][j].gety());
 		if(board[i][j] instanceof Pawn){
 		    temp[i][j]=new Pawn(c);
@@ -78,7 +76,7 @@ public class GameBoard{
 		}
 		temp[i][j].setPlayer(board[i][j].getPlayer());
 		temp[i][j].setImage(board[i][j].getAvatar(),board[i][j].getPic());
-		*/
+		temp[i][j].setPlayer(board[i][j].getPlayer());
 	    }
 	}
 	return temp;
