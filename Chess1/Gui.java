@@ -107,9 +107,9 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-		ImageIcon icon=g.getBoard()[x][8-y].getAvatar();
+		ImageIcon icon=g.getBoard()[x][y].getAvatar();
 		g.pattern[x][y].setIcon(icon);
-		chessboardmain.add(g.pattern[x][8-y]);
+		chessboardmain.add(g.pattern[x][y]);
 	    }
 	}
 	piecegridmain.validate();
