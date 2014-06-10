@@ -10,9 +10,9 @@ public class Run{
 	}
     }
     public static void main(String[]args){
+	Gui main=new Gui();
 	GameBoard g= new GameBoard();
-	g.initialize();
-	Gui main = new Gui(g);
+	g=main.retBoard();
 	main.setVisible(true);
 	int turn=0;
 	boolean auto=false;

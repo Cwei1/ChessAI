@@ -2,7 +2,7 @@ import java.util.*;
 import javax.swing.*;
 public class GameBoard{
     protected Piece[][] board;
-    protected JLabel[][] pattern;
+    protected JButton[][] pattern;
     protected boolean checkmate,stalemate;
     protected Player p1, p2;
     private String light = "Pics/light.jpg";
@@ -11,7 +11,7 @@ public class GameBoard{
     private boolean bck,wck;
     public GameBoard(){ 
 	board = new Piece[8][8];
-        pattern = new JLabel[8][8];
+        pattern = new JButton[8][8];
 	p1 = new Player(true);
 	p2 = new Player(false);
 	bck=false;
@@ -58,6 +58,8 @@ public class GameBoard{
 	Piece[][] temp = new Piece[board.length][board[0].length];
 	for (int i = 0; i < board.length; i++){
 	    for (int j = 0; j < board.length; j++){
+		temp[i][j]=board[i][j];
+		/*
 		Coordinate c=new Coordinate(board[i][j].getx(),board[i][j].gety());
 		if(board[i][j] instanceof Pawn){
 		    temp[i][j]=new Pawn(c);
@@ -76,20 +78,20 @@ public class GameBoard{
 		}
 		temp[i][j].setPlayer(board[i][j].getPlayer());
 		temp[i][j].setImage(board[i][j].getAvatar(),board[i][j].getPic());
-		temp[i][j].setFirst(board[i][j].isFirst());
+		*/
 	    }
 	}
 	return temp;
     }
     //--------------------------------------Gui Stuff for Cardy to fix--------------------------------
-    public JLabel[][] getPattern(){
+    public JButton[][] getPattern(){
         return pattern;
     }
     public void initialize(){
 	cleanBoard();
         for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-		pattern[y][x] = new JLabel();
+		pattern[y][x] = new JButton();
 		pattern[y][x].setIcon(new javax.swing.ImageIcon(getClass().getResource(now)));
 		if (now.equals(dark)){
 		    now = light;
@@ -297,7 +299,7 @@ public class GameBoard{
 	    }
 	}
     }
-		
+
     //---------------------------To String Method-------------------------------------
     public String toString(){
 	String s="";

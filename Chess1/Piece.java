@@ -9,12 +9,12 @@ public abstract class Piece{
     Coordinate location;
     boolean first;
     ArrayList<Coordinate> moves;
-    JButton avatar;
+    ImageIcon avatar;
     BufferedImage buttonIcon;
     public Piece(Player a, Coordinate location){
 	setPlayer(a);
 	setLocation(location);
-        avatar = new JButton();
+        avatar = new ImageIcon();
     }
     public Piece(Coordinate location){
 	this(new Player(true),location);
@@ -36,23 +36,19 @@ public abstract class Piece{
 	    } catch(IOException e){
 		System.out.println("File not found: " + e.getMessage());
 	    }
-	    avatar = new JButton(new ImageIcon(buttonIcon));
+	    avatar = new ImageIcon(buttonIcon);
         } else {           
 	    try{
 	        buttonIcon = ImageIO.read(new File(bpath));
 	    } catch (IOException e){
 		System.out.println("File not found: " + e.getMessage());
 	    }
-	    avatar = new JButton(new ImageIcon(buttonIcon));
+	    avatar = new ImageIcon(buttonIcon);
 	}
-	    avatar.setBorder(BorderFactory.createEmptyBorder());
-	    avatar.setContentAreaFilled(false);
     }
-    public void setImage(JButton p,BufferedImage b){
-	avatar=p;
-	buttonIcon=b;
-    }
-    public JButton getAvatar(){
+
+
+    public ImageIcon getAvatar(){
 	return avatar;
     }
     public BufferedImage getPic(){
