@@ -49,11 +49,11 @@ public class Gui extends JFrame implements ActionListener{
 	    for(int y = 0;y < 8; y++){
 	      
 		ImageIcon icon=g.getBoard()[y][x].getAvatar();
-		g.pattern[y][x].setIcon(icon);
-		g.pattern[y][x].setPreferredSize(new Dimension(80, 80));
+		g.pattern[x][y].setIcon(icon);
+		g.pattern[x][y].setPreferredSize(new Dimension(80, 80));
 		g.pattern[x][y].addActionListener(this);
 		back=g.pattern[x][y].getBackground();
-		chessboardmain.add(g.pattern[y][x]);
+		chessboardmain.add(g.pattern[x][y]);
 		
 	    }
 	    panel2.add(new JLabel(Integer.toString(x+1)));
@@ -107,15 +107,9 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	for(int y = 0; y < 8; y++){             
 	    for(int x = 0; x < 8; x++){
-<<<<<<< HEAD
 		ImageIcon icon=g.getBoard()[x][7-y].getAvatar();
 		g.pattern[x][y].setIcon(icon);
 		chessboardmain.add(g.pattern[x][7-y]);
-=======
-		ImageIcon icon=g.getBoard()[x][y].getAvatar();
-		g.pattern[x][y].setIcon(icon);
-		chessboardmain.add(g.pattern[x][y]);
->>>>>>> 739a3b51914c066cddbfd671c0fe0de38da73e21
 	    }
 	}
 	piecegridmain.validate();

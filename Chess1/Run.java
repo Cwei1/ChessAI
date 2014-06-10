@@ -98,7 +98,7 @@ public class Run{
 		System.out.println("Use format:a3 b4");
 	    }
 		if(auto){
-		    delay(250);
+		    delay(1000);
 		}
 		main.refresh(g);
 	}
