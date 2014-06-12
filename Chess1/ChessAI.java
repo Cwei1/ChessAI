@@ -15,7 +15,7 @@ public class ChessAI{
 	for(int i=0;i<8;i++){
 	    for(int j=0;j<8;j++){
 		if(board.getPiece(i,j).isWhite()&&color){
-		    moves.add(bestMove(board.getPiece(i,j).getMoves(board)));
+		    //moves.add(bestMove(board.getPiece(i,j).getMoves(board)));
 		}
 	    }
 	}

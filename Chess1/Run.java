@@ -10,10 +10,8 @@ public class Run{
 	}
     }
     public static void main(String[]args){
-	Gui main=new Gui();
 	GameBoard g= new GameBoard();
-	g=main.retBoard();
-	main.setVisible(true);
+	Gui main=new Gui(g);
 	int turn=0;
 	boolean auto=false;
 	String response = "";
@@ -86,7 +84,7 @@ public class Run{
 			turn++;
 		    }else{
 			System.out.println(g);
-			System.out.println("Illegal move!here");
+			System.out.println("Illegal move!");
 		    }
 		}catch(Exception e){
 		    e.printStackTrace();
@@ -97,10 +95,10 @@ public class Run{
 		System.out.println(g);
 		System.out.println("Use format:a3 b4");
 	    }
-		if(auto){
-		    delay(1000);
-		}
-		main.refresh(g);
+	    if(auto){
+		delay(1000);
+	    }
+	    main.refresh();
 	}
 	System.out.println(g.win());	
     }

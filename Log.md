@@ -27,3 +27,5 @@ I added 2 more complete game files (g3.txt,g4.txt)
 6/9/14 - Devendra, Dionis - Starting work on writing the ChessAI file
 
 6/9/14 - Cardy - Researched ways that ChessAI's use Trees and Maps to think of moves. Fixed bugs.
+
+6/11/14 - Dionis - more bug fixes. This time in the gui.
