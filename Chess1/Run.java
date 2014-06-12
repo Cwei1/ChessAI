@@ -14,6 +14,7 @@ public class Run{
 	Gui main=new Gui(g);
 	int turn=0;
 	boolean auto=false;
+	boolean ai=false;
 	String response = "";
 	Scanner s=new Scanner(System.in);
 	if(args.length>0){

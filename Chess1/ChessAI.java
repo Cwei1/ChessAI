@@ -1,7 +1,7 @@
 import java.util.*;
 import java.io.*;
 public class ChessAI{
-    private PriorityQueue<Coordinate> moves;
+    private PriorityQueue<Move> moves;
     private boolean color;
     private GameBoard board;
     
@@ -15,9 +15,12 @@ public class ChessAI{
 	for(int i=0;i<8;i++){
 	    for(int j=0;j<8;j++){
 		if(board.getPiece(i,j).isWhite()&&color){
-		    //moves.add(bestMove(board.getPiece(i,j).getMoves(board)));
+		    moves.add(new Move(new Coordinate(i,j),Board.bestMove(i,j)));
 		}
 	    }
 	}
+    }
+    public Move Play(){
+	return moves.poll();
     }
 }

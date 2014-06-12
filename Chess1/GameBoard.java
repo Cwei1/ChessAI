@@ -310,6 +310,27 @@ public class GameBoard{
 	}
 	return s+"\n   a b c d e f g h\n";
     }
+
+    //================================ChessAI=================================
+    
+    public Coordinate bestMove(int x, int y){
+	ArrayList<Coordinate>moves=board.getPiece(x,y).getmoves();
+	Coordinate best=new Coordinate();
+	for(Coordinate c:moves){
+	    Piece[][]fake=copyOf();
+	    movePiece(i,j,c.getx(),c.gety(),false);
+	    if(c.getx()==3||c.gety()===3||c.getx()==4||c.gety()==4){
+		best = c;
+	    }
+	    //complex calculations here;
+	    for(int a=0;a<8;a++){
+		for(int b=0;b<8;b++){
+		    board[a][b]=fake[a][b];
+		}
+	    }
+	}
+	return best;
+    }
 }
 
     
