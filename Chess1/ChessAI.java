@@ -7,7 +7,7 @@ public class ChessAI{
     
     public ChessAI (boolean color,GameBoard board){
 	this.color = color;
-	moves = new PriorityQueue<Coordinate>();
+	moves = new PriorityQueue<Move>();
 	this.board=board;
     }
     
@@ -15,7 +15,7 @@ public class ChessAI{
 	for(int i=0;i<8;i++){
 	    for(int j=0;j<8;j++){
 		if(board.getPiece(i,j).isWhite()&&color){
-		    moves.add(new Move(new Coordinate(i,j),Board.bestMove(i,j)));
+		    moves.add(new Move(new Coordinate(i,j),board.bestMove(i,j)));
 		}
 	    }
 	}

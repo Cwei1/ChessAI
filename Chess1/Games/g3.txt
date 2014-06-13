@@ -18,13 +18,11 @@ d2 h6
 c8 b7
 a2 a3
 e7 e5
-Castle
 e1 a1
 d8 e7
 c1 b1
 a7 a6
 e2 c1
-Castle
 e8 a8
 c1 b3
 e5 d4

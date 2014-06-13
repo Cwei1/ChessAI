@@ -2,7 +2,8 @@ import javax.swing.*;
 import javax.swing.ImageIcon;
 import java.awt.*;
 import java.awt.event.*;
-
+import java.util.*;
+import java.io.*;
 public class Gui extends JFrame implements ActionListener{
     /*
     protected JPanel chessboardmain,piecegridmain, all, options, blackcapture, whitecapture; 
@@ -23,18 +24,31 @@ public class Gui extends JFrame implements ActionListener{
     Color black=new Color(139,69,19);
     Color white=new Color(244,164,96);
     Color now=white;
-
+    Scanner s;
+    boolean turn=true;
+    boolean auto=false;
+    Coordinate start,end;
  
-    public Gui(GameBoard g) {
-	board =g;
+    public Gui(GameBoard g,String[]args) {
+	board =new GameBoard();
 	board.initialize();
         initComponents();
+	if(args.length>0){
+	    try{
+		s= new Scanner(new File("Games/"+args[0]));
+		auto=true;
+		play();
+	    }catch(FileNotFoundException e){
+		System.out.println("File not found!");
+	    }
+	}
     }
     
     public GameBoard getBoard(){
 	return board;
     }
-                      
+
+    
     private void initComponents() {
 	GridLayout grid1=new GridLayout(1, 8);
 	GridLayout grid2=new GridLayout(8, 1);
@@ -87,14 +101,28 @@ public class Gui extends JFrame implements ActionListener{
     }  
 
     public void actionPerformed(ActionEvent event){
+	if(board.getdone()){
+	    return;
+	}
 	for(int x = 0; x< 8; x++){             
 	    for(int y = 0;y < 8; y++){
 		if (event.getSource()==board.pattern[x][y]){
-		    clearBackground();
-		    now=board.pattern[x][y].getBackground();
-		    board.pattern[x][y].setBackground(Color.GREEN);
-		    JFrame box=new JFrame();
-		    JOptionPane.showMessageDialog(box, "Hey, it's green!");
+		    if(start == null ){
+			if(!(board.getPiece(x,y) instanceof NullPiece)){   
+			    now=board.pattern[x][y].getBackground();
+			    board.pattern[x][y].setBackground(Color.GREEN);
+			    start=new Coordinate(x,y);
+			}
+		    }else{
+			end=new Coordinate(x,y);
+			if(!turn(new Move(start,end))){
+			    start=null;
+			    end=null;
+			}else if(board.getdone()){
+			    JOptionPane.showMessageDialog(new JFrame(),board.win());
+			}
+			clearBackground();
+		    }
 		}
 	    }
 	}
@@ -109,7 +137,13 @@ public class Gui extends JFrame implements ActionListener{
 	    }
 	}
     }
-
+    public void delay(int time){
+	try {
+	    Thread.sleep(time);
+	} catch(InterruptedException ex) {
+	    Thread.currentThread().interrupt();
+	}
+    }
     public void refresh(){
         chessboardmain.removeAll();
 	for(int y = 0; y< 8; y++){             
@@ -124,5 +158,58 @@ public class Gui extends JFrame implements ActionListener{
 	chessboardmain.validate();
 	chessboardmain.repaint();
     }     
-    
+    public boolean turn(Move m){
+	Piece p1=board.getPiece(m.getStart());
+	Piece p2=board.getPiece(m.getEnd());
+	if(p1 instanceof NullPiece ||(p1.isWhite()&&!turn)||(!p1.isWhite()&&turn)){
+	    return false;
+	}else if(p1 instanceof King && p2 instanceof Rook){
+	    if(board.castle(turn,p1,p2)){
+		turn=!turn;
+	    } 
+	}else if(board.movePiece(m.getStart(),m.getEnd(),true)){
+	    p2=board.getPiece(m.getEnd());
+	    if(p2 instanceof Pawn && (p2.gety()==0||p2.gety()==7)){
+		String upgrade="";
+		if(auto){
+		    upgrade=s.nextLine();
+		}else{}
+		board.upgrade(p2,upgrade);
+	    }
+	    turn=!turn;
+	    if(auto){
+		delay(300);
+	    }
+	    refresh();
+	}
+	return true;
+    }
+    //=================================Auto play=============================
+    public void play(){
+	while(!board.getdone()){
+	    String l = "";
+	    try {
+		l=s.nextLine();
+	    }
+	    catch (NoSuchElementException e){
+		System.out.println("Game is over");
+		break;
+	    }
+	    try{
+		int x1=l.charAt(0)-'a';
+		int y1=Integer.parseInt(""+l.charAt(1))-1;
+		int x2=l.charAt(3)-'a';
+		int y2=Integer.parseInt(""+l.charAt(4))-1;
+		System.out.println(board.getPiece(x1,y1)+l.substring(l.length()-2) + "\n");
+		if(!turn(new Move(new Coordinate(x1,y1),new Coordinate(x2,y2)))){
+		    break;
+		}
+	    }catch(Exception e){
+		System.out.println("Invalid move: "+l);
+		e.printStackTrace();
+		break;
+	    }
+	}
+	System.out.println(board.win());	
+    }
 }

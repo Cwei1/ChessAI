@@ -15,10 +15,11 @@ public abstract class Piece{
 	setPlayer(a);
 	setLocation(location);
         avatar = new ImageIcon();
+	first=true;
+	setImage();
     }
     public Piece(Coordinate location){
 	this(new Player(true),location);
-	first=true;
     }
     public void setFirst(boolean a){
 	first=a;

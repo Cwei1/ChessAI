@@ -24,9 +24,9 @@ public class GameBoard{
     }
     public String win(){
 	if(checkmate && bck){
-	    return "Checkmate!\nPlayer 1 Wins!";
+	    return "Checkmate!\nWhite Wins!";
 	}else if(checkmate && wck){
-	    return "Checkmate!\nPlayer 2 Wins!";
+	    return "Checkmate!\nBlack Wins!";
 	}else if(stalemate){
 	    return "Stalemate!!";
 	}
@@ -43,6 +43,9 @@ public class GameBoard{
     }
     public Piece getPiece(int x, int y){
 	return board[x][y];
+    }
+    public Piece getPiece(Coordinate c){
+	return getPiece(c.getx(),c.gety());
     }
     public void setPiece(int x, int y,Piece p){
 	board[x][y]=p;
@@ -136,55 +139,44 @@ public class GameBoard{
     }
 
     //----------------------------CASTLING---------------------------------------
-    public boolean castle(boolean b,String ln){
-	if((b&&wck)||(!b&&bck)){
+    public boolean castle(boolean b,Piece px, Piece rk){
+	int x1=px.getx();
+	int y1=px.gety();
+	int x2=rk.getx();
+	int y2=rk.gety();
+	if((b&&wck)||(!b&&bck)||!px.isFirst()||!rk.isFirst()){
 	    return false;
 	}
-	try{
-	    int x1=ln.charAt(0)-'a';
-	    int y1=Integer.parseInt(""+ln.charAt(1))-1;
-	    int x2=ln.charAt(3)-'a';
-	    int y2=Integer.parseInt(""+ln.charAt(4))-1;
-	    Piece px=getPiece(x1,y1);
-	    Piece rk=getPiece(x2,y2);
-	    Piece temp=getPiece(x1,y1);
-	    if(!(px instanceof King)||!px.isFirst()||!(rk instanceof Rook)||!rk.isFirst()||(b&&!px.isWhite())||(!b&&px.isWhite())){
-		return false;
-	    }
-	    if(rk.getx()>(int)(4)){
-		for(int i=px.getx()+1;i<rk.getx();i++){
-		    if(!(board[i][px.gety()] instanceof NullPiece)){
-			return false;
-		    }
+	Piece temp=getPiece(x1,y1);
+	if(rk.getx()>(int)(4)){
+	    for(int i=px.getx()+1;i<rk.getx();i++){
+		if(!(board[i][px.gety()] instanceof NullPiece)){
+		    return false;
 		}
-		board[px.getx()+2][px.gety()]=px;
-		board[px.getx()+2][px.gety()].setxy(px.getx()+2,px.gety());
-		board[px.getx()-1][px.gety()]=rk;
-		board[px.getx()-1][px.gety()].setxy(px.getx()-1,px.gety());
-		board[px.getx()][px.gety()].setFirst(false);
-		board[px.getx()][px.gety()].setFirst(false);
-	    }else{
-		for(int i=px.getx()-1;i>rk.getx();i--){
-		    if(!(board[i][px.gety()] instanceof NullPiece)){
-			return false;
-		    }
-		}
-		board[px.getx()-2][px.gety()]=px;
-		board[px.getx()-2][px.gety()].setxy(px.getx()-2,px.gety());
-		board[px.getx()+1][px.gety()]=rk;
-		board[px.getx()+1][px.gety()].setxy(px.getx()+1,px.gety());
-		board[px.getx()][px.gety()].setFirst(false);
-		board[px.getx()][px.gety()].setFirst(false);
 	    }
-	    board[x1][y1]=new NullPiece(new Coordinate(x1,y1));
-	    ((NullPiece)board[x1][y1]).setImage();
-	    board[x2][y2]=new NullPiece(new Coordinate(x2,y2));
-	    ((NullPiece)board[x2][y2]).setImage();
-	    return true;	    
-	}catch(Exception e){
-	    return false;
+	    board[px.getx()+2][px.gety()]=px;
+	    board[px.getx()+2][px.gety()].setxy(px.getx()+2,px.gety());
+	    board[px.getx()-1][px.gety()]=rk;
+	    board[px.getx()-1][px.gety()].setxy(px.getx()-1,px.gety());
+	    board[px.getx()][px.gety()].setFirst(false);
+	    board[px.getx()][px.gety()].setFirst(false);
+	}else{
+	    for(int i=px.getx()-1;i>rk.getx();i--){
+		if(!(board[i][px.gety()] instanceof NullPiece)){
+		    return false;
+		    }
+	    }
+	    board[px.getx()-2][px.gety()]=px;
+	    board[px.getx()-2][px.gety()].setxy(px.getx()-2,px.gety());
+	    board[px.getx()+1][px.gety()]=rk;
+	    board[px.getx()+1][px.gety()].setxy(px.getx()+1,px.gety());
+	    board[px.getx()][px.gety()].setFirst(false);
+	    board[px.getx()][px.gety()].setFirst(false);
 	}
-    } 
+	board[x1][y1]=new NullPiece(new Coordinate(x1,y1));
+	board[x2][y2]=new NullPiece(new Coordinate(x2,y2));
+	return true;
+    }
     public void upgrade(Piece x,String ln){
 	Piece p = new NullPiece();
 	if(ln.equals("Knight")){
@@ -201,19 +193,31 @@ public class GameBoard{
 	board[x.getx()][x.gety()]=p;
     }
     //-----------------------------------Moving a piece--------------------------------------------
-    public boolean movePiece(int x,int y, int a, int b,boolean check){
-	Coordinate temp=new Coordinate(a,b);
-	Piece p= getPiece(x,y);
+    public boolean movePiece(Coordinate a, Coordinate b,boolean check){
+	int x1=a.getx();
+	int y1=a.gety();
+	int x2=b.getx();
+	int y2=b.gety();
+	Piece p= getPiece(a);
+	Piece t= getPiece(b);
 	ArrayList<Coordinate> moves=new ArrayList();
 	moves=p.getMoves(this);
-	for(int i=0;i<moves.size();i++){
-	    if(temp.equals(moves.get(i))){
-		Piece t= getPiece(a,b);
-		board[a][b]=getPiece(x,y);
-		board[x][y]=new NullPiece(new Coordinate(x,y));
-		((NullPiece)board[x][y]).setImage();
-		getPiece(a,b).setxy(a,b);
+	for(Coordinate c:moves){
+	    if(b.equals(c)){
+		Piece[][] temp=copyOf();
+		board[x2][y2]=p;
+		board[x1][y1]=new NullPiece(new Coordinate(x1,y1));
+		getPiece(x2,y2).setxy(x2,y2);
 		p.setFirst(false);
+		inCheck(false);
+		if((p.isWhite()&&wck)||(!p.isWhite()&&bck)){
+		    for(int h=0;h<8;h++){
+			for(int i=0;i<8;i++){
+			    board[h][i]=temp[h][i];
+			}
+		    }
+		    return false;
+		}
 		inCheck(check);
 		return true;
 	    }	 
@@ -225,9 +229,9 @@ public class GameBoard{
 	wck=false;
 	bck=false;
 	ArrayList<Coordinate>white=new ArrayList<Coordinate>();
-	ArrayList<Coordinate>black=new ArrayList<Coordinate>();
-	Piece bk=new NullPiece();
 	Piece wk=new NullPiece();
+	ArrayList<Coordinate>black=new ArrayList<Coordinate>();
+	Piece bk=new NullPiece();	
 	for(int x=0;x<8;x++){
 	    for(int y=0;y<8;y++){
 		if(!(board[x][y] instanceof NullPiece)){
@@ -279,7 +283,7 @@ public class GameBoard{
 		    ArrayList<Coordinate> moves= temp.getMoves(this);
 		    for(Coordinate c: moves){
 			Piece[][]fake=copyOf();
-			movePiece(i,j,c.getx(),c.gety(),false);
+			movePiece(new Coordinate(i,j),c,false);
 		        for(int a=0;a<8;a++){
 			    for(int b=0;b<8;b++){
 				board[a][b]=fake[a][b];
@@ -314,12 +318,12 @@ public class GameBoard{
     //================================ChessAI=================================
     
     public Coordinate bestMove(int x, int y){
-	ArrayList<Coordinate>moves=board.getPiece(x,y).getmoves();
+	ArrayList<Coordinate>moves=getPiece(x,y).getMoves(this);
 	Coordinate best=new Coordinate();
 	for(Coordinate c:moves){
 	    Piece[][]fake=copyOf();
-	    movePiece(i,j,c.getx(),c.gety(),false);
-	    if(c.getx()==3||c.gety()===3||c.getx()==4||c.gety()==4){
+	    movePiece(new Coordinate(x,y),c,false);
+	    if(c.getx()==3||c.gety()==3||c.getx()==4||c.gety()==4){
 		best = c;
 	    }
 	    //complex calculations here;

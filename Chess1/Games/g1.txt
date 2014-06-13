@@ -7,7 +7,6 @@ g8 f6
 b1 c3
 f8 e7
 c1 g5
-Castle
 e8 h8
 e2 e3
 h7 h6

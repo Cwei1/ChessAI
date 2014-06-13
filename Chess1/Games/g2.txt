@@ -20,13 +20,11 @@ b1 d2
 e6 e5
 f1 g2
 c6 c5
-Castle
 e1 h1
 b8 c6
 f3 e2
 d8 e7
 f2 f4
-Castle
 e8 a8
 a2 a3
 f6 e8

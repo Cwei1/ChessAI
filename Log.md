@@ -29,3 +29,5 @@ I added 2 more complete game files (g3.txt,g4.txt)
 6/9/14 - Cardy - Researched ways that ChessAI's use Trees and Maps to think of moves. Fixed bugs.
 
 6/11/14 - Dionis - more bug fixes. This time in the gui.
+
+6/12/14 - Dionis - Move most of run into gui so click and move can be implemented. Bug fixes.
