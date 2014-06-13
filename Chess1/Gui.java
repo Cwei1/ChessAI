@@ -29,7 +29,7 @@ public class Gui extends JFrame implements ActionListener{
     boolean auto=false;
     Coordinate start,end;
  
-    public Gui(GameBoard g,String[]args) {
+    public Gui(String[]args) {
 	board =new GameBoard();
 	board.initialize();
         initComponents();
@@ -146,18 +146,32 @@ public class Gui extends JFrame implements ActionListener{
     }
     public void refresh(){
         chessboardmain.removeAll();
-	for(int y = 0; y< 8; y++){             
-	    for(int x = 0;x < 8; x++){	      
-		ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
-		board.pattern[x][7-y].setIcon(icon);
-		board.pattern[x][7-y].addActionListener(this);
-		chessboardmain.add(board.pattern[x][7-y]);
-		
+	if(turn){
+	    for(int y = 0; y< 8; y++){             
+		for(int x = 0;x < 8; x++){	      
+		    ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
+		    board.pattern[x][7-y].setIcon(icon);
+		    board.pattern[x][7-y].addActionListener(this);
+		    chessboardmain.add(board.pattern[x][7-y]);
+		    
+		}
+	    }
+	}
+	else{
+	    for(int y = 0; y< 8; y++){             
+		for(int x = 0;x < 8; x++){	      
+		    ImageIcon icon=board.getBoard()[x][y].getAvatar();
+		    board.pattern[x][y].setIcon(icon);
+		    board.pattern[x][y].addActionListener(this);
+		    chessboardmain.add(board.pattern[x][y]);
+		    
+		}
 	    }
 	}
 	chessboardmain.validate();
 	chessboardmain.repaint();
     }     
+
     public boolean turn(Move m){
 	Piece p1=board.getPiece(m.getStart());
 	Piece p2=board.getPiece(m.getEnd());
@@ -173,7 +187,14 @@ public class Gui extends JFrame implements ActionListener{
 		String upgrade="";
 		if(auto){
 		    upgrade=s.nextLine();
-		}else{}
+		}else{
+		    
+		    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
+		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,icon,possibilities,"Queen");
+		    if ((s != null) && (s.length() > 0)) {
+			upgrade=s;
+		    }
+		}
 		board.upgrade(p2,upgrade);
 	    }
 	    turn=!turn;
