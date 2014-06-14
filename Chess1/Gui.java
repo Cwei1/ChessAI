@@ -188,12 +188,12 @@ public class Gui extends JFrame implements ActionListener{
 		if(auto){
 		    upgrade=s.nextLine();
 		}else{
-		    /*		    
+	    
 		    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
-		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,icon,possibilities,"Queen");
+		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
 		    if ((s != null) && (s.length() > 0)) {
 			upgrade=s;
-			}*/
+			}
 		}
 		board.upgrade(p2,upgrade);
 	    }
