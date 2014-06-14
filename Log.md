@@ -32,4 +32,4 @@ I added 2 more complete game files (g3.txt,g4.txt)
 
 6/12/14 - Dionis - Move most of run into gui so click and move can be implemented. Bug fixes.
 
-6/14/14 - Cardy - Implemented switching sides of the board to easily accomodate two player mode. Added Pawn Promotion through a pop-up interface.
+6/14/14 - Cardy - Implemented switching sides of the board to easily accomodate two player mode. Added Pawn Promotion through a pop-up interface. Fixed Bugs. Fixed the problem of the player not being able to use other pieces after a piece was initially selected.
