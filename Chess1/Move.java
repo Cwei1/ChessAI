@@ -1,8 +1,9 @@
 public class Move{
     private Coordinate start,end;
+ 
     public Move(Coordinate s, Coordinate e){
-	start=s;
-	end=e;
+	start = s;
+	end = e;
     }
     public Coordinate getStart(){
 	return start;
