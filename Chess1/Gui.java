@@ -29,6 +29,10 @@ public class Gui extends JFrame implements ActionListener{
     boolean auto=false;
     Coordinate start,end;
  
+
+ 	Piece p1;
+ 	Piece p2;
+
     public Gui(String[]args) {
 	board =new GameBoard();
 	board.initialize();
@@ -50,82 +54,89 @@ public class Gui extends JFrame implements ActionListener{
 
     
     private void initComponents() {
-	GridLayout grid1=new GridLayout(1, 8);
-	GridLayout grid2=new GridLayout(8, 1);
-	JPanel panel1=new JPanel();
-	JPanel panel2=new JPanel();
-	JPanel panel3=new JPanel();
-	JPanel panel4=new JPanel();
-	panel1.setLayout(grid1);
-	panel2.setLayout(grid2);
-	panel3.setLayout(grid1);
-	panel4.setLayout(grid2);
-	panel1.add(new JPanel());
-	panel3.add(new JPanel());	
-	chessboardmain = new JPanel();
-	for(int y = 0; y< 8; y++){             
-	    for(int x = 0;x < 8; x++){
-		ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
-		board.pattern[x][7-y].setIcon(icon);
-		board.pattern[x][7-y].setPreferredSize(new Dimension(75, 75));
-		board.pattern[x][7-y].addActionListener(this);
-		board.pattern[x][7-y].setBackground(now);
-		if(now.equals(white)){
-		    now=black;
-		}else{
-		    now=white;
+		GridLayout grid1=new GridLayout(1, 8);
+		GridLayout grid2=new GridLayout(8, 1);
+		JPanel panel1=new JPanel();
+		JPanel panel2=new JPanel();
+		JPanel panel3=new JPanel();
+		JPanel panel4=new JPanel();
+		panel1.setLayout(grid1);
+		panel2.setLayout(grid2);
+		panel3.setLayout(grid1);
+		panel4.setLayout(grid2);
+		panel1.add(new JPanel());
+		panel3.add(new JPanel());	
+		chessboardmain = new JPanel();
+		for(int y = 0; y< 8; y++){             
+		    for(int x = 0;x < 8; x++){
+			ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
+			board.pattern[x][7-y].setIcon(icon);
+			board.pattern[x][7-y].setPreferredSize(new Dimension(75, 75));
+			board.pattern[x][7-y].addActionListener(this);
+			board.pattern[x][7-y].setBackground(now);
+			if(now.equals(white)){
+			    now=black;
+			}else{
+			    now=white;
+			}
+			chessboardmain.add(board.pattern[x][7-y]);		
+		    }
+		    if(now.equals(white)){
+			now=black;
+		    }else{
+			now=white;
+		    }
+		    panel1.add(new JLabel("  "+letters.substring(y,y+1)+"  "));
+		    panel2.add(new JLabel(Integer.toString(8-y)));
+		    panel3.add(new JLabel("  "+letters.substring(y,y+1)+"  "));
+		    panel4.add(new JLabel(Integer.toString(8-y)));
 		}
-		chessboardmain.add(board.pattern[x][7-y]);		
-	    }
-	    if(now.equals(white)){
-		now=black;
-	    }else{
-		now=white;
-	    }
-	    panel1.add(new JLabel("  "+letters.substring(y,y+1)+"  "));
-	    panel2.add(new JLabel(Integer.toString(8-y)));
-	    panel3.add(new JLabel("  "+letters.substring(y,y+1)+"  "));
-	    panel4.add(new JLabel(Integer.toString(8-y)));
-	}
-	frame.setTitle("Chess");
-    	frame.getContentPane().add(BorderLayout.CENTER, chessboardmain);
-	frame.getContentPane().add(BorderLayout.NORTH, panel1);
-	frame.getContentPane().add(BorderLayout.WEST, panel2);
-	frame.getContentPane().add(BorderLayout.SOUTH, panel3);
-	frame.getContentPane().add(BorderLayout.EAST, panel4);
-	frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
-	frame.setSize(675, 700);
-	frame.setLocation(100, 0);
-	frame.setVisible(true);
-	frame.setResizable(false);
+		frame.setTitle("Chess");
+	    	frame.getContentPane().add(BorderLayout.CENTER, chessboardmain);
+		frame.getContentPane().add(BorderLayout.NORTH, panel1);
+		frame.getContentPane().add(BorderLayout.WEST, panel2);
+		frame.getContentPane().add(BorderLayout.SOUTH, panel3);
+		frame.getContentPane().add(BorderLayout.EAST, panel4);
+		frame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+		frame.setSize(675, 700);
+		frame.setLocation(100, 0);
+		frame.setVisible(true);
+		frame.setResizable(false);
     }  
 
     public void actionPerformed(ActionEvent event){
-	if(board.getdone()){
-	    return;
-	}
-	for(int x = 0; x< 8; x++){             
-	    for(int y = 0;y < 8; y++){
-		if (event.getSource()==board.pattern[x][y]){
-		    if(start == null ){
-			if(!(board.getPiece(x,y) instanceof NullPiece)){   
-			    now=board.pattern[x][y].getBackground();
-			    board.pattern[x][y].setBackground(Color.GREEN);
-			    start=new Coordinate(x,y);
+		if(board.getdone()){
+		    return;
+		}
+		for(int x = 0; x< 8; x++){             
+		    for(int y = 0;y < 8; y++){
+			if (event.getSource()==board.pattern[x][y]){
+			    if(start == null ){
+				if(!(board.getPiece(x,y) instanceof NullPiece)){   
+				    now=board.pattern[x][y].getBackground();
+				    board.pattern[x][y].setBackground(Color.GREEN);
+				    start=new Coordinate(x,y);
+				}
+			    }
+			    else if(!(board.getPiece(x,y) instanceof NullPiece)){ 
+			    	clearBackground();  
+				    now=board.pattern[x][y].getBackground();
+				    board.pattern[x][y].setBackground(Color.GREEN);
+				    start=new Coordinate(x,y);
+				}
+			   	else{
+				end=new Coordinate(x,y);
+				if(!turn(new Move(start,end))){
+				    start=null;
+				    end=null;
+				}else if(board.getdone()){
+				    JOptionPane.showMessageDialog(new JFrame(),board.win());
+				}
+				clearBackground();
+			    }
 			}
-		    }else{
-			end=new Coordinate(x,y);
-			if(!turn(new Move(start,end))){
-			    start=null;
-			    end=null;
-			}else if(board.getdone()){
-			    JOptionPane.showMessageDialog(new JFrame(),board.win());
-			}
-			clearBackground();
 		    }
 		}
-	    }
-	}
     }
 
     public void clearBackground(){
@@ -173,37 +184,39 @@ public class Gui extends JFrame implements ActionListener{
     }     
 
     public boolean turn(Move m){
-	Piece p1=board.getPiece(m.getStart());
-	Piece p2=board.getPiece(m.getEnd());
-	if(p1 instanceof NullPiece ||(p1.isWhite()&&!turn)||(!p1.isWhite()&&turn)){
-	    return false;
-	}else if(p1 instanceof King && p2 instanceof Rook){
-	    if(board.castle(turn,p1,p2)){
-		turn=!turn;
-	    } 
-	}else if(board.movePiece(m.getStart(),m.getEnd(),true)){
-	    p2=board.getPiece(m.getEnd());
-	    if(p2 instanceof Pawn && (p2.gety()==0||p2.gety()==7)){
-		String upgrade="";
-		if(auto){
-		    upgrade=s.nextLine();
-		}else{
-	    
-		    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
-		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
-		    if ((s != null) && (s.length() > 0)) {
-			upgrade=s;
+		p1=board.getPiece(m.getStart());
+		p2=board.getPiece(m.getEnd());
+	
+			if(p1 instanceof NullPiece ||(p1.isWhite()&&!turn)||(!p1.isWhite()&&turn)){
+			    return false;
+			}else if(p1 instanceof King && p2 instanceof Rook){
+			    if(board.castle(turn,p1,p2)){
+				turn=!turn;
+			    } 
+			}else if(board.movePiece(m.getStart(),m.getEnd(),true)){
+			    p2=board.getPiece(m.getEnd());
+			    if(p2 instanceof Pawn && (p2.gety()==0||p2.gety()==7)){
+				String upgrade="";
+				if(auto){
+				    upgrade=s.nextLine();
+				}else{
+			    
+				    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
+				    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
+				    if ((s != null) && (s.length() > 0)) {
+					upgrade=s;
+					}
+				}
+				board.upgrade(p2,upgrade);
+			    }
+			    turn=!turn;
+			    if(auto){
+				delay(300);
+			    }
+			    refresh();
 			}
-		}
-		board.upgrade(p2,upgrade);
-	    }
-	    turn=!turn;
-	    if(auto){
-		delay(300);
-	    }
-	    refresh();
-	}
-	return true;
+
+		return true;
     }
     //=================================Auto play=============================
     public void play(){
