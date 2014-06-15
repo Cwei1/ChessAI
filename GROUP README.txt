@@ -1,3 +1,10 @@
+Devendra and Cardy: Yeah I just found the problem.
+Forgot to add a try and catch block in pawn.java for
+the if(first){....}part of the move function. I am not sure
+which chess to change so just add the try and catch 
+block to whichever one you are working on and try
+the scenario again.
+
 Dionis:  me and Cardy discovered a problem 
 with the pawn check in the game last night.
 Apparently there seems to be some sort of 
