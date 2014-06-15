@@ -189,6 +189,22 @@ public class Gui extends JFrame implements ActionListener{
 	chessboardmain.repaint();
     }     
 
+    public void refresh2(){
+        chessboardmain.removeAll();
+	    for(int y = 0; y< 8; y++){             
+			for(int x = 0;x < 8; x++){	      
+			    ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
+			    board.pattern[x][7-y].setIcon(icon);
+			    board.pattern[x][7-y].addActionListener(this);
+			    chessboardmain.add(board.pattern[x][7-y]);
+			    
+			}
+	    }
+
+		chessboardmain.validate();
+		chessboardmain.repaint();
+    }     
+
     public boolean turn(Move m){
 		p1=board.getPiece(m.getStart());
 		p2=board.getPiece(m.getEnd());
@@ -218,8 +234,9 @@ public class Gui extends JFrame implements ActionListener{
 			    turn=!turn;
 			    if(auto){
 				delay(300);
+				refresh2();
 			    }
-			    refresh();
+			    else{refresh();}
 			}
 
 		return true;
