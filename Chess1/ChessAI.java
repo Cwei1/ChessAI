@@ -10,6 +10,7 @@ public class ChessAI{
 	Comparator<Move> comp = new MoveComp(board, color);
 	moves = new PriorityQueue<Move>(100,comp);
 	this.board=board;
+	getMoves();
     }
     
     public void getMoves (){
