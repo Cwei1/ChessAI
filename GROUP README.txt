@@ -1,6 +1,7 @@
-So guys I got checkmate working and the file read in thing
-working. Cardy upload the gui so we can merge it.
-The next part after that is to try and break the program so
-we can fix bugs. Feel free to make the code more concise
-I found out I had a bunch of garbage code in there that didn't
-do anything. So yeah we are making progress.
+Dionis:  me and Cardy discovered a problem 
+with the pawn check in the game last night.
+Apparently there seems to be some sort of 
+a problem with when the pawn reaches the 
+opponent's side and puts the king in check.
+We tried to fix it but both of us are still
+unsure of how this portion of the code works.
