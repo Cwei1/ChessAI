@@ -197,49 +197,47 @@ public class Gui extends JFrame implements ActionListener{
 			    board.pattern[x][7-y].setIcon(icon);
 			    board.pattern[x][7-y].addActionListener(this);
 			    chessboardmain.add(board.pattern[x][7-y]);
-			    
 			}
 	    }
-
 		chessboardmain.validate();
 		chessboardmain.repaint();
     }     
 
     public boolean turn(Move m){
-		p1=board.getPiece(m.getStart());
-		p2=board.getPiece(m.getEnd());
+	p1=board.getPiece(m.getStart());
+	p2=board.getPiece(m.getEnd());
 	
-			if(p1 instanceof NullPiece ||(p1.isWhite()&&!turn)||(!p1.isWhite()&&turn)){
-			    return false;
-			}else if(p1 instanceof King && p2 instanceof Rook){
-			    if(board.castle(turn,p1,p2)){
-				turn=!turn;
-			    } 
-			}else if(board.movePiece(m.getStart(),m.getEnd(),true)){
-			    p2=board.getPiece(m.getEnd());
-			    if(p2 instanceof Pawn && (p2.gety()==0||p2.gety()==7)){
-				String upgrade="";
-				if(auto){
-				    upgrade=s.nextLine();
-				}else{
-			    
-				    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
-				    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
-				    if ((s != null) && (s.length() > 0)) {
-					upgrade=s;
-					}
-				}
-				board.upgrade(p2,upgrade);
-			    }
-			    turn=!turn;
-			    if(auto){
-				delay(300);
-				refresh2();
-			    }
-			    else{refresh();}
-			}
+	if(p1 instanceof NullPiece ||(p1.isWhite()&&!turn)||(!p1.isWhite()&&turn)){
+	    return false;
+	}else if(p1 instanceof King && p2 instanceof Rook){
+	    if(board.castle(turn,p1,p2)){
+		turn=!turn;
+	    } 
+	}else if(board.movePiece(m.getStart(),m.getEnd(),true)){
+	    p2=board.getPiece(m.getEnd());
+	    if(p2 instanceof Pawn && (p2.gety()==0||p2.gety()==7)){
+		String upgrade="";
+		if(auto){
+		    upgrade=s.nextLine();
+		}else{
+		    
+		    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
+		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
+		    if ((s != null) && (s.length() > 0)) {
+			upgrade=s;
+		    }
+		}
+		board.upgrade(p2,upgrade);
+	    }
+	    turn=!turn;
+	    if(auto){
+		delay(300);
+		refresh2();
+	    }
+	    else{refresh();}
+	}
 
-		return true;
+	return true;
     }
     //=================================Auto play=============================
     public void play(){

@@ -42,7 +42,10 @@ public class GameBoard{
     	return wck;
     }
     public Piece getPiece(int x, int y){
-	return board[x][y];
+	if (x >= 0 && x <= 7 &&
+	    y >= 0 && y <= 7)
+	    return board[x][y];
+	return null;
     }
     public Piece getPiece(Coordinate c){
 	return getPiece(c.getx(),c.gety());
