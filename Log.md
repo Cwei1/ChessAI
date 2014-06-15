@@ -8,7 +8,7 @@
 
 6/3/14 - Devendra - Worked on writing a file that can play an entire chess game by reading prewritten moves off of a text file.
 
-6/3/14 - Cardy - Adapted GUI functionailites to code
+6/3/14 - Cardy - Adapted GUI functionalities to code
 
 6/4/14 - Devendra - Switched gears and started working on the play-game-file-reader using a different chess algorithm.
 
@@ -28,8 +28,12 @@ I added 2 more complete game files (g3.txt,g4.txt)
 
 6/9/14 - Cardy - Researched ways that ChessAI's use Trees and Maps to think of moves. Fixed bugs.
 
-6/11/14 - Dionis - more bug fixes. This time in the gui.
+6/11/14 - Devendra, Dionis - more bug fixes involved with gameboard flashing, and random perspective switching in the gui.
 
-6/12/14 - Dionis - Move most of run into gui so click and move can be implemented. Bug fixes.
+6/12/14 - Dionis - Moved most of run into gui so click and move can be implemented. Bug fixes.
+
+6/13/14 - Devendra - Worked on the code for the ChessAI algorithm
+
+6/14/14 - Devendra - Added new files which allow for comparisons between moves to be used in the priority queue in ChessAI
 
 6/14/14 - Cardy - Implemented switching sides of the board to easily accomodate two player mode. Added Pawn Promotion through a pop-up interface. Fixed Bugs. Fixed the problem of the player not being able to use other pieces after a piece was initially selected.
