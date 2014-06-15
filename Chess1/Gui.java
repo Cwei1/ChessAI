@@ -118,7 +118,13 @@ public class Gui extends JFrame implements ActionListener{
 				    start=new Coordinate(x,y);
 				}
 			    }
-			    else if(!(board.getPiece(x,y) instanceof NullPiece)){ 
+			    else if(!(board.getPiece(x,y) instanceof NullPiece) && board.getPiece(x, y).isWhite() && turn){ 
+			    	clearBackground();  
+				    now=board.pattern[x][y].getBackground();
+				    board.pattern[x][y].setBackground(Color.GREEN);
+				    start=new Coordinate(x,y);
+				}
+				else if(!(board.getPiece(x,y) instanceof NullPiece) && !(board.getPiece(x, y).isWhite()) && !turn){ 
 			    	clearBackground();  
 				    now=board.pattern[x][y].getBackground();
 				    board.pattern[x][y].setBackground(Color.GREEN);
