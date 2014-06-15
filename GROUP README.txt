@@ -7,3 +7,11 @@ We tried to fix it but both of us are still
 unsure of how this portion of the code works.
 Look at the picture that I put in this 
 directory.
+
+Note: It has nothing to do with the code we 
+just wrote and updated. The check for all 
+other pieces work. All the other pawns work 
+perfectly as well. Other pawns also still 
+have the ability to check. It just seems 
+that the code messes up in just this one 
+specific scenario. (Look at picture.)
