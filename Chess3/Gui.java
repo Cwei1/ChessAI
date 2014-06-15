@@ -5,53 +5,37 @@ import java.awt.event.*;
 import java.util.*;
 import java.io.*;
 public class Gui extends JFrame implements ActionListener{
-    /*
-    protected JPanel chessboardmain,piecegridmain, all, options, blackcapture, whitecapture; 
-    protected JLayeredPane piecePane;
-    private JLabel black, white, turn;
-    private JButton newGame;
-    JPanel panel=new JPanel();
-    JPanel panel2=new JPanel();
-    JPanel panel3=new JPanel();
-    JPanel panel4=new JPanel();
-    JPanel panel5=new JPanel();
-    */
+
     private GameBoard board= new GameBoard();
     private String letters="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     private JPanel chessboardmain;
 
-    JFrame frame=new JFrame();
-    Color black=new Color(139,69,19);
-    Color white=new Color(244,164,96);
-    Color now=white;
-    Scanner s;
-    boolean turn=true;
-    boolean auto=false;
-    boolean singlePlayMode = false;
-    Coordinate start,end;
-    Piece p1;
-    Piece p2;
-    boolean comp = false;
-    boolean firstMove = true;
+    private JFrame frame=new JFrame();
+    private Color black=new Color(139,69,19);
+    private Color white=new Color(244,164,96);
+    private Color now=white;
+    private Scanner s;
+    private boolean turn=true;
+    private boolean auto=false;
+    private boolean singlePlayMode = false;
+    private Coordinate start,end;
+    private Piece p1;
+    private Piece p2;
+    private boolean comp = true;
+    private boolean firstMove = true;
     
     public Gui(String[]args) {
-	Object[] possibilities = {"Two-Player Mode", "Single-Player Mode"};
-	String k = (String)JOptionPane.showInputDialog(frame, "Choose Your Preferred Mode of Game:","Game Mode",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Two-Player Mode");
-	if (k == null){
-	    System.exit(0);
+	if (args.length == 0){
+	    Object[] possibilities = {"Two-Player Mode", "Single-Player Mode"};
+	    String k = (String)JOptionPane.showInputDialog(frame, "Choose Your Preferred Mode of Game:","Game Mode",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Two-Player Mode");
+	    if (k == null){
+		System.exit(0);
+	    }
+	    if (k.equals("Single-Player Mode")){
+		singlePlayMode = true;
+	    }
 	}
-	String q = null;
-	if (k.equals("Single-Player Mode")){
-	    singlePlayMode = true;
-	    Object[] pos = {"White", "Black"};
-	    q = (String)JOptionPane.showInputDialog(frame, "Choose Your Color:","Color Choice",JOptionPane.PLAIN_MESSAGE,null, pos,"White");
-	    if (q.equals("Black"))
-		comp = true;
-	}
-	if (q == null){
-	    System.exit(0);
-	}
-	board =new GameBoard();
+	board = new GameBoard();
 	board.initialize();
         initComponents();
 	if(args.length>0){
@@ -63,8 +47,7 @@ public class Gui extends JFrame implements ActionListener{
 		System.out.println("File not found!");
 	    }
 	}
-	if ((comp == true)&&  
-	    (singlePlayMode == true)){
+	if (singlePlayMode == true){
 	    ChessAI computer = new ChessAI(true,board);
 	    Move compMove = computer.bestMove();
 	    board.movePiece(compMove.getStart(), compMove.getEnd(), true);
@@ -130,11 +113,13 @@ public class Gui extends JFrame implements ActionListener{
     }  
     
     public void actionPerformed(ActionEvent event){
+	if (auto)
+	    return;
 	if(board.getdone()){
 	    return;
 	}
-	if (firstMove == true &&
-	    comp == true)
+	if (firstMove == true && 
+	    singlePlayMode == true)
 	    return;
 	for(int x = 0; x< 8; x++){             
 	    for(int y = 0;y < 8; y++){
@@ -165,6 +150,7 @@ public class Gui extends JFrame implements ActionListener{
 			    end=null;
 			}else if(board.getdone()){
 			    JOptionPane.showMessageDialog(new JFrame(),board.win());
+			    System.exit(0);
 			}
 			clearBackground();
 		    }
@@ -198,7 +184,6 @@ public class Gui extends JFrame implements ActionListener{
 		    board.pattern[x][7-y].setIcon(icon);
 		    board.pattern[x][7-y].addActionListener(this);
 		    chessboardmain.add(board.pattern[x][7-y]);
-		    
 		}
 	    }
 	}
@@ -272,6 +257,7 @@ public class Gui extends JFrame implements ActionListener{
 		refresh();
 	    }
 	}
+	//==============================ChessAI===============================
 	if (singlePlayMode){
 	    ChessAI master = new ChessAI(comp,board);
 	    Move masterMove = master.bestMove();
@@ -290,7 +276,9 @@ public class Gui extends JFrame implements ActionListener{
 		l=s.nextLine();
 	    }
 	    catch (NoSuchElementException e){
-		System.out.println("Game is over");
+		System.out.println("Game Over");
+		JOptionPane.showMessageDialog(new JFrame(),"Game Over");
+		System.exit(0);
 		break;
 	    }
 	    try{
@@ -310,9 +298,4 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	System.out.println(board.win());	
     }
-    //=================================ChessAI=========================================
-
-
-
-
 }

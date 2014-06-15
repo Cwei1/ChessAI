@@ -38,13 +38,15 @@ public class Pawn extends Piece{
 	}catch(Exception e){
 	}
 	if(first){
-	    for(int i=1;i<3;i++){		
-		temp=g.getPiece(getx(),gety()+(i*w));
-		if(temp instanceof NullPiece){
-		    moves.add(new Coordinate(getx(),gety()+(i*w)));
+	    try{
+		for(int i=1;i<3;i++){		
+		    temp=g.getPiece(getx(),gety()+(i*w));
+		    if(temp instanceof NullPiece){
+			moves.add(new Coordinate(getx(),gety()+(i*w)));
+		    }
 		}
+	    }catch(Exception e){
 	    }
-
 	}else{
 	    try{
 		temp=g.getPiece(getx(),gety()+w);

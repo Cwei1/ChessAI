@@ -102,7 +102,7 @@ public class GameBoard{
 	}
 	return temp;
     }
-    //--------------------------------------Gui Stuff for Cardy to fix--------------------------------
+
     public JButton[][] getPattern(){
         return pattern;
     }
