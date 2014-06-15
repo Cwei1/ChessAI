@@ -267,4 +267,9 @@ public class Gui extends JFrame implements ActionListener{
 	}
 	System.out.println(board.win());	
     }
+    //=================================ChessAI=========================================
+
+
+
+
 }

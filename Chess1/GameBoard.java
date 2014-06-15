@@ -19,6 +19,18 @@ public class GameBoard{
 	stalemate=false;
 	checkmate=false;
     }
+
+    public GameBoard(Piece[][] board){ 
+	this.board = board;
+        pattern = new JButton[8][8];
+	p1 = new Player(true);
+	p2 = new Player(false);
+	bck=false;
+	wck=false;
+	stalemate=false;
+	checkmate=false;
+    }
+
     public boolean getdone(){
 	return stalemate || checkmate;
     }
@@ -40,6 +52,9 @@ public class GameBoard{
     }
     public boolean inCheckW(){
     	return wck;
+    }
+    public boolean getCheckmate(){
+	return checkmate;
     }
     public Piece getPiece(int x, int y){
 	if (x >= 0 && x <= 7 &&
@@ -338,6 +353,24 @@ public class GameBoard{
 	}
 	return best;
     }
+    
+    public boolean inDanger(Coordinate thing){
+	for (int i = 0; i < 8; i++){
+	    for (int j = 0; j < 8; j++){
+		if (!(getPiece(thing) instanceof NullPiece) &&
+		    getPiece(thing).isWhite() &&
+		    getPiece(i,j).isWhite()){
+		    ArrayList<Coordinate> killzone = getPiece(i,j).getMoves(this);
+		    for (Coordinate c: killzone){
+			if (c.equals(thing))
+			    return true;
+		    }	
+		}
+	    }
+	}
+	return false;
+    }
+
 }
 
     
