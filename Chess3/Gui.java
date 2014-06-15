@@ -31,15 +31,25 @@ public class Gui extends JFrame implements ActionListener{
     Coordinate start,end;
     Piece p1;
     Piece p2;
-
+    boolean comp = false;
+    boolean firstMove = true;
+    
     public Gui(String[]args) {
 	Object[] possibilities = {"Two-Player Mode", "Single-Player Mode"};
 	String k = (String)JOptionPane.showInputDialog(frame, "Choose Your Preferred Mode of Game:","Game Mode",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Two-Player Mode");
 	if (k == null){
 	    System.exit(0);
 	}
+	String q = null;
 	if (k.equals("Single-Player Mode")){
 	    singlePlayMode = true;
+	    Object[] pos = {"White", "Black"};
+	    q = (String)JOptionPane.showInputDialog(frame, "Choose Your Color:","Color Choice",JOptionPane.PLAIN_MESSAGE,null, pos,"White");
+	    if (q.equals("Black"))
+		comp = true;
+	}
+	if (q == null){
+	    System.exit(0);
 	}
 	board =new GameBoard();
 	board.initialize();
@@ -52,6 +62,15 @@ public class Gui extends JFrame implements ActionListener{
 	    }catch(FileNotFoundException e){
 		System.out.println("File not found!");
 	    }
+	}
+	if ((comp == true)&&  
+	    (singlePlayMode == true)){
+	    ChessAI computer = new ChessAI(true,board);
+	    Move compMove = computer.bestMove();
+	    board.movePiece(compMove.getStart(), compMove.getEnd(), true);
+	    refresh();
+	    firstMove = false;
+	    turn = !turn;
 	}
     }
     
@@ -114,6 +133,9 @@ public class Gui extends JFrame implements ActionListener{
 	if(board.getdone()){
 	    return;
 	}
+	if (firstMove == true &&
+	    comp == true)
+	    return;
 	for(int x = 0; x< 8; x++){             
 	    for(int y = 0;y < 8; y++){
 		if (event.getSource()==board.pattern[x][y]){
@@ -198,15 +220,15 @@ public class Gui extends JFrame implements ActionListener{
     public void refresh2(){
         chessboardmain.removeAll();
 	    for(int y = 0; y< 8; y++){             
-			for(int x = 0;x < 8; x++){	      
-			    ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
-			    board.pattern[x][7-y].setIcon(icon);
-			    board.pattern[x][7-y].addActionListener(this);
-			    chessboardmain.add(board.pattern[x][7-y]);
-			}
+		for(int x = 0;x < 8; x++){	      
+		    ImageIcon icon=board.getBoard()[x][7-y].getAvatar();
+		    board.pattern[x][7-y].setIcon(icon);
+		    board.pattern[x][7-y].addActionListener(this);
+		    chessboardmain.add(board.pattern[x][7-y]);
+		}
 	    }
-		chessboardmain.validate();
-		chessboardmain.repaint();
+	    chessboardmain.validate();
+	    chessboardmain.repaint();
     }     
 
     public boolean turn(Move m){
@@ -225,8 +247,11 @@ public class Gui extends JFrame implements ActionListener{
 		String upgrade="";
 		if(auto){
 		    upgrade=s.nextLine();
-		}else{
-		    
+		}
+		else if (singlePlayMode){
+		    upgrade = "Queen";
+		}
+		else{
 		    Object[] possibilities = {"Queen", "Knight", "Rook", "Bishop"};
 		    String s = (String)JOptionPane.showInputDialog(frame, "Promote your pawn:","Pawn promotion",JOptionPane.PLAIN_MESSAGE,null, possibilities,"Queen");
 		    if ((s != null) && (s.length() > 0)) {
@@ -240,9 +265,21 @@ public class Gui extends JFrame implements ActionListener{
 		delay(300);
 		refresh2();
 	    }
-	    else{refresh();}
+	    else if (singlePlayMode){
+		refresh2();
+	    }
+	    else{
+		refresh();
+	    }
 	}
-
+	if (singlePlayMode){
+	    ChessAI master = new ChessAI(comp,board);
+	    Move masterMove = master.bestMove();
+	    turn = comp;
+	    board.movePiece(masterMove.getStart(), masterMove.getEnd(),true);
+	    refresh2();
+	    turn = !turn;
+	}
 	return true;
     }
     //=================================Auto play=============================

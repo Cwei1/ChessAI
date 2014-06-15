@@ -114,6 +114,7 @@ public class MoveComp implements Comparator<Move>{
 	    if (val1 < val2)
 		return -1;
 	}
-	return 0;
+	int[] ret = {-1,0,1};
+	return ret[(int)(Math.random() * ret.length)];
     }
 }
