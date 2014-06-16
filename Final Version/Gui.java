@@ -51,7 +51,7 @@ public class Gui extends JFrame implements ActionListener{
 	    ChessAI computer = new ChessAI(true,board);
 	    Move compMove = computer.bestMove();
 	    board.movePiece(compMove.getStart(), compMove.getEnd(), true);
-	    refresh();
+	    refresh3();
 	    firstMove = false;
 	    turn = !turn;
 	}
@@ -214,6 +214,20 @@ public class Gui extends JFrame implements ActionListener{
 	    }
 	    chessboardmain.validate();
 	    chessboardmain.repaint();
+    }   
+
+    public void refresh3(){
+        chessboardmain.removeAll();
+	    for(int y = 0; y< 8; y++){             
+		for(int x = 0;x < 8; x++){	      
+		    ImageIcon icon=board.getBoard()[x][y].getAvatar();
+		    board.pattern[x][y].setIcon(icon);
+		    board.pattern[x][y].addActionListener(this);
+		    chessboardmain.add(board.pattern[x][y]);
+		}
+	    }
+	    chessboardmain.validate();
+	    chessboardmain.repaint();
     }     
 
     public boolean turn(Move m){
@@ -251,7 +265,7 @@ public class Gui extends JFrame implements ActionListener{
 		refresh2();
 	    }
 	    else if (singlePlayMode){
-		refresh2();
+		refresh3();
 	    }
 	    else{
 		refresh();
@@ -263,7 +277,7 @@ public class Gui extends JFrame implements ActionListener{
 	    Move masterMove = master.bestMove();
 	    turn = comp;
 	    board.movePiece(masterMove.getStart(), masterMove.getEnd(),true);
-	    refresh2();
+	    refresh3();
 	    turn = !turn;
 	}
 	return true;
