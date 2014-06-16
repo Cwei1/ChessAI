@@ -33,6 +33,8 @@ public class Gui extends JFrame implements ActionListener{
 	    }
 	    if (k.equals("Single-Player Mode")){
 		singlePlayMode = true;
+		JOptionPane.showMessageDialog(new JFrame(),"The Computer is Always White");
+		JOptionPane.showMessageDialog(new JFrame(),"Please Note that Single-Player Mode is Extremely Slow");
 	    }
 	}
 	board = new GameBoard();

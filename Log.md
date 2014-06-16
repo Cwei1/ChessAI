@@ -34,11 +34,11 @@ I added 2 more complete game files (g3.txt,g4.txt)
 
 6/13/14 - Devendra - Worked on the code for the ChessAI algorithm
 
-6/14/14 - Devendra - Added new files which allow for comparisons between moves to be used in the priority queue in ChessAI
-
 6/14/14 - Cardy - Implemented switching sides of the board to easily accomodate two player mode. Added Pawn Promotion through a pop-up interface. Fixed Bugs. Fixed the problem of the player not being able to use other pieces after a piece was initially selected.
 
-6/15/14 - Devandra and Cardy - Wrote the AI, fixed bugs, and adapted to GUI.
+6/14/14 - Devendra - Added new files which allow for comparisons between moves to be used in the priority queue in ChessAI
 
-6/15/14 - Dionis - Fixed Check with pawn bug.
+6/15/14 - Devendra, Cardy - Finished up the AI, fixed bugs, and integrated ChessAI with the GUI.
+
+6/15/14 - Dionis - Fixed a bug involving check with Pawns.
 
