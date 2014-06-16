@@ -7,7 +7,7 @@ Description: A fully functional Chess Game with an interactive Graphical User In
 
 Instructions: All of the java files are inside of the directory "Final-Version". Go into this directory and run the command "javac *.java" to compile all java files. After which you will be able to run the program by typing in "java Run".
 
-What Works: The possible moves of all chess pieces follow the standard rules of Chess. Castling is functional. The user can play against the computer in Single-Player Mode. Pawns can be upgraded to pieces of higher value once they reach the opponent's side.
+What Works: The possible moves of all chess pieces follow the standard rules of Chess. The user can play against the computer in Single-Player Mode. Pawns can be upgraded to pieces of higher value once they reach the opponent's side.
 
 What Doesn't Work: Everything works in our version of Chess, however Single-Player Mode is extremely slow due to the large number of moves the computer has to look through and calculate.
 
